@@ -1061,7 +1061,7 @@ init();
   function communityChanged(){clearTimeout(communityRefreshTimer);communityRefreshTimer=setTimeout(async()=>{await loadCloudCommunity(false);if(currentView()==='community'&&!onlineGame)renderCloudCommunity()},350)}
 
   async function initCloud(){
-    document.querySelector('.brand span').textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V11';
+    document.querySelector('.brand span').textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13';
     refreshCloudBadge();
     if(!window.supabase?.createClient){setSyncStatus('error');console.warn('Supabase library unavailable');return}
     try{
@@ -1076,9 +1076,9 @@ init();
   window.openCloudAccount=window.openDeviceSync;
   function renderCloudAccount(msg='',isErr=false){
     const root=document.getElementById('deviceSync');if(!root)return;
-    if(!cloudUser){root.innerHTML=`<div class="backrow"><button class="back" onclick="show('home')">←</button><div><h1>Cloud-Konto</h1><div class="sub">Ein Konto · Handy, Computer und Tablet · automatische Synchronisierung.</div></div></div><div class="v10-hero"><span class="v8-kicker">V11 · Supabase Free</span><h1>Auf einem Gerät lernen. Auf dem anderen weitermachen.</h1><p>Fortschritt, Wiederholungen, Profil, Schreibentwürfe und Community-Daten werden nach der Anmeldung automatisch synchronisiert. Offline können Sie weiterlernen; beim nächsten Internetzugang wird wieder abgeglichen.</p></div><div class="cloud-auth-grid" style="margin-top:14px"><form class="cloud-panel" onsubmit="cloudLogin(event)"><span class="v8-badge purple">ANMELDEN</span><h2 style="margin-top:10px">Schon ein Konto?</h2><div class="cloud-field"><label>E-Mail</label><input id="cloudLoginEmail" class="cloud-input" type="email" autocomplete="email" required></div><div class="cloud-field"><label>Passwort</label><input id="cloudLoginPass" class="cloud-input" type="password" autocomplete="current-password" minlength="6" required></div><div class="toolbar"><button class="btn primary" type="submit">Anmelden</button><button class="btn ghost" type="button" onclick="cloudResetPassword()">Passwort vergessen?</button></div></form><form class="cloud-panel" onsubmit="cloudRegister(event)"><span class="v8-badge good">REGISTRIEREN</span><h2 style="margin-top:10px">Neues kostenloses Konto</h2><div class="cloud-field"><label>Name</label><input id="cloudRegName" class="cloud-input" value="${esc(p().name||'')}" required></div><div class="cloud-field"><label>E-Mail</label><input id="cloudRegEmail" class="cloud-input" type="email" autocomplete="email" required></div><div class="cloud-field"><label>Passwort · mindestens 6 Zeichen</label><input id="cloudRegPass" class="cloud-input" type="password" autocomplete="new-password" minlength="6" required></div><button class="btn dark" type="submit">Konto erstellen</button></form></div>${msg?`<div class="${isErr?'cloud-error':'cloud-ok'}">${esc(msg)}</div>`:''}<div class="safe-note" style="margin-top:14px"><span>🔒</span><div><b>Datenschutz:</b> Das Passwort wird nicht in dieser HTML-Datei gespeichert. Die Anmeldung wird von Supabase Auth verwaltet. Die App enthält nur die öffentliche Publishable Key.</div></div>`;return}
+    if(!cloudUser){root.innerHTML=`<div class="backrow"><button class="back" onclick="show('home')">←</button><div><h1>Cloud-Konto</h1><div class="sub">Ein Konto · Handy, Computer und Tablet · automatische Synchronisierung.</div></div></div><div class="v10-hero"><span class="v8-kicker">V12 · Supabase Free</span><h1>Auf einem Gerät lernen. Auf dem anderen weitermachen.</h1><p>Fortschritt, Wiederholungen, Profil, Schreibentwürfe und Community-Daten werden nach der Anmeldung automatisch synchronisiert. Offline können Sie weiterlernen; beim nächsten Internetzugang wird wieder abgeglichen.</p></div><div class="cloud-auth-grid" style="margin-top:14px"><form class="cloud-panel" onsubmit="cloudLogin(event)"><span class="v8-badge purple">ANMELDEN</span><h2 style="margin-top:10px">Schon ein Konto?</h2><div class="cloud-field"><label>E-Mail</label><input id="cloudLoginEmail" class="cloud-input" type="email" autocomplete="email" required></div><div class="cloud-field"><label>Passwort</label><input id="cloudLoginPass" class="cloud-input" type="password" autocomplete="current-password" minlength="6" required></div><div class="toolbar"><button class="btn primary" type="submit">Anmelden</button><button class="btn ghost" type="button" onclick="cloudResetPassword()">Passwort vergessen?</button></div></form><form class="cloud-panel" onsubmit="cloudRegister(event)"><span class="v8-badge good">REGISTRIEREN</span><h2 style="margin-top:10px">Neues kostenloses Konto</h2><div class="cloud-field"><label>Name</label><input id="cloudRegName" class="cloud-input" value="${esc(p().name||'')}" required></div><div class="cloud-field"><label>E-Mail</label><input id="cloudRegEmail" class="cloud-input" type="email" autocomplete="email" required></div><div class="cloud-field"><label>Passwort · mindestens 6 Zeichen</label><input id="cloudRegPass" class="cloud-input" type="password" autocomplete="new-password" minlength="6" required></div><button class="btn dark" type="submit">Konto erstellen</button></form></div>${msg?`<div class="${isErr?'cloud-error':'cloud-ok'}">${esc(msg)}</div>`:''}<div class="safe-note" style="margin-top:14px"><span>🔒</span><div><b>Datenschutz:</b> Das Passwort wird nicht in dieser HTML-Datei gespeichert. Die Anmeldung wird von Supabase Auth verwaltet. Die App enthält nur die öffentliche Publishable Key.</div></div>`;return}
     const a=overallAccuracy(),meta=cloudMeta();
-    root.innerHTML=`<div class="backrow"><button class="back" onclick="show('home')">←</button><div style="flex:1"><h1>Cloud-Synchronisierung</h1><div class="sub">Automatisch zwischen allen Geräten mit demselben Konto.</div></div><span class="cloud-pill green">● verbunden</span></div><div class="v10-hero"><span class="v8-kicker">AUTOMATISCH · V11</span><h1>${esc(p().name)}, Ihr Lernstand reist mit.</h1><p>Wenn Sie am Computer eine Aufgabe lösen, wird der Fortschritt in Supabase gespeichert. Ihr Telefon erhält die Änderung automatisch über Realtime oder spätestens beim nächsten Öffnen der App.</p></div><div class="cloud-sync-row"><div class="cloud-kpi"><span>KONTO</span><b>${esc(cloudUser.email||'')}</b></div><div class="cloud-kpi"><span>LETZTER SYNC</span><b>${fmtTime(lastSyncAt||meta.updatedAt)}</b></div><div class="cloud-kpi"><span>FORTSCHRITT</span><b>${a.attempts?a.pct+'%':'–'}</b></div><div class="cloud-kpi"><span>XP</span><b>${state.xp||0}</b></div></div><div class="cloud-auth-grid"><div class="cloud-panel"><h2>Synchronisierung</h2><div class="cloud-status"><div class="cloud-status-icon">☁</div><div><strong>${syncState==='syncing'?'Synchronisierung läuft…':syncState==='error'?'Verbindungsproblem':'Alles synchronisiert'}</strong><small>Gerät: ${esc(deviceId.slice(-8))}</small></div></div><div class="toolbar"><button class="btn primary" onclick="cloudSyncNow()">Jetzt synchronisieren</button><button class="btn ghost" onclick="cloudPullNow()">Cloud neu laden</button></div><div class="cloud-sync-note">Die lokale Kopie bleibt erhalten. Ohne Internet lernen Sie weiter; sobald die Verbindung zurück ist, wird wieder synchronisiert.</div></div><div class="cloud-panel"><h2>Konto</h2><p><b>${esc(cloudUser.email||'')}</b></p><p class="subtle">Profil-ID: ${esc(cloudUser.id.slice(0,8))}…</p><div class="toolbar"><button class="btn dark" onclick="openCommunity()">Online-Community</button><button class="btn ghost" onclick="cloudLogout()">Abmelden</button></div><div class="divider"></div><h3>Notfall-Backup</h3><p class="subtle">Zusätzlich zur Cloud können Sie weiterhin eine Datei sichern.</p><div class="toolbar"><button class="btn ghost sm" onclick="v10ExportBackup()">Backup herunterladen</button><label class="btn ghost sm" style="cursor:pointer">Backup importieren<input type="file" accept="application/json,.json" style="display:none" onchange="v10ImportBackup(this.files[0])"></label></div></div></div>${msg?`<div class="${isErr?'cloud-error':'cloud-ok'}">${esc(msg)}</div>`:''}`;
+    root.innerHTML=`<div class="backrow"><button class="back" onclick="show('home')">←</button><div style="flex:1"><h1>Cloud-Synchronisierung</h1><div class="sub">Automatisch zwischen allen Geräten mit demselben Konto.</div></div><span class="cloud-pill green">● verbunden</span></div><div class="v10-hero"><span class="v8-kicker">AUTOMATISCH · V12</span><h1>${esc(p().name)}, Ihr Lernstand reist mit.</h1><p>Wenn Sie am Computer eine Aufgabe lösen, wird der Fortschritt in Supabase gespeichert. Ihr Telefon erhält die Änderung automatisch über Realtime oder spätestens beim nächsten Öffnen der App.</p></div><div class="cloud-sync-row"><div class="cloud-kpi"><span>KONTO</span><b>${esc(cloudUser.email||'')}</b></div><div class="cloud-kpi"><span>LETZTER SYNC</span><b>${fmtTime(lastSyncAt||meta.updatedAt)}</b></div><div class="cloud-kpi"><span>FORTSCHRITT</span><b>${a.attempts?a.pct+'%':'–'}</b></div><div class="cloud-kpi"><span>XP</span><b>${state.xp||0}</b></div></div><div class="cloud-auth-grid"><div class="cloud-panel"><h2>Synchronisierung</h2><div class="cloud-status"><div class="cloud-status-icon">☁</div><div><strong>${syncState==='syncing'?'Synchronisierung läuft…':syncState==='error'?'Verbindungsproblem':'Alles synchronisiert'}</strong><small>Gerät: ${esc(deviceId.slice(-8))}</small></div></div><div class="toolbar"><button class="btn primary" onclick="cloudSyncNow()">Jetzt synchronisieren</button><button class="btn ghost" onclick="cloudPullNow()">Cloud neu laden</button></div><div class="cloud-sync-note">Die lokale Kopie bleibt erhalten. Ohne Internet lernen Sie weiter; sobald die Verbindung zurück ist, wird wieder synchronisiert.</div></div><div class="cloud-panel"><h2>Konto</h2><p><b>${esc(cloudUser.email||'')}</b></p><p class="subtle">Profil-ID: ${esc(cloudUser.id.slice(0,8))}…</p><div class="toolbar"><button class="btn dark" onclick="openCommunity()">Online-Community</button><button class="btn ghost" onclick="cloudLogout()">Abmelden</button></div><div class="divider"></div><h3>Notfall-Backup</h3><p class="subtle">Zusätzlich zur Cloud können Sie weiterhin eine Datei sichern.</p><div class="toolbar"><button class="btn ghost sm" onclick="v10ExportBackup()">Backup herunterladen</button><label class="btn ghost sm" style="cursor:pointer">Backup importieren<input type="file" accept="application/json,.json" style="display:none" onchange="v10ImportBackup(this.files[0])"></label></div></div></div>${msg?`<div class="${isErr?'cloud-error':'cloud-ok'}">${esc(msg)}</div>`:''}`;
   }
   window.cloudLogin=async function(ev){ev?.preventDefault();if(!sb)return;const email=document.getElementById('cloudLoginEmail')?.value.trim(),password=document.getElementById('cloudLoginPass')?.value||'';if(!email||!password)return;setSyncStatus('syncing');const {data,error}=await sb.auth.signInWithPassword({email,password});if(error){setSyncStatus('error');renderCloudAccount(error.message,true);return}await initUser(data.user,true);renderCloudAccount('Anmeldung erfolgreich.')};
   window.cloudRegister=async function(ev){ev?.preventDefault();if(!sb)return;const name=document.getElementById('cloudRegName')?.value.trim()||'Deutschlerner',email=document.getElementById('cloudRegEmail')?.value.trim(),password=document.getElementById('cloudRegPass')?.value||'';if(!email||password.length<6)return;p().name=name;oldLocalSave();setSyncStatus('syncing');const {data,error}=await sb.auth.signUp({email,password,options:{data:{display_name:name}}});if(error){setSyncStatus('error');renderCloudAccount(error.message,true);return}if(data.session){await initUser(data.user,true);renderCloudAccount('Konto erstellt und angemeldet.')}else{setSyncStatus('offline');renderCloudAccount('Konto erstellt. Bitte bestätigen Sie zuerst die E-Mail und melden Sie sich danach an.')}};
@@ -1205,8 +1205,569 @@ init();
   // Visible build marker so users can verify they opened the corrected file.
   try{
     const sub=document.querySelector('.brand span');
-    if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V11.1';
+    if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13';
   }catch(_){}
+})();
+</script>
+
+
+<script id="v12-exercise-engine">
+(function(){
+  // ============================================================
+  // V12 ÜBUNGSENGINE
+  // Ziel: große Übungsvielfalt + möglichst keine Wiederholungen,
+  // bevor andere Varianten desselben Lernstoffs genutzt wurden.
+  // ============================================================
+  state.v12=state.v12||{dailySets:{}};
+  state.v12.dailySets=state.v12.dailySets||{};
+
+  function v12Shuffle(arr,seed){
+    if(typeof seededShuffle==='function')return seededShuffle(arr,seed||String(Date.now()));
+    return shuffle(arr);
+  }
+  function v12Choice(correct, pool, seed, n=4){
+    const vals=[...new Set(pool.filter(x=>x!=null&&String(x).trim()!==''))].filter(x=>norm(x)!==norm(correct));
+    return v12Shuffle([correct,...v12Shuffle(vals,seed+'d').slice(0,Math.max(0,n-1))],seed+'o');
+  }
+  function v12MaskWord(sentence,word){
+    sentence=String(sentence||''); word=String(word||'').trim();
+    if(!sentence||!word)return sentence;
+    const bare=word.replace(/^(der|die|das|den|dem|des|ein|eine|einen|einem|einer)\s+/i,'').trim();
+    const candidates=[word,bare].filter(Boolean).sort((a,b)=>b.length-a.length);
+    for(const c of candidates){
+      const rx=new RegExp(c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i');
+      if(rx.test(sentence))return sentence.replace(rx,'___');
+    }
+    return sentence;
+  }
+  function v12MaskPrep(sentence,prep){
+    const rx=new RegExp('\\b'+String(prep).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i');
+    return rx.test(sentence)?sentence.replace(rx,'___'):sentence;
+  }
+  function v12Concept(t){return t.concept||String(t.id||'').replace(/-(v|p)\d+$/,'').replace(/^prod12-/,'').replace(/^t12-/,'')}
+  function v12Seen(t){return !!(state.review&&state.review[t.id])}
+  function v12Priority(t){
+    const seen=v12Seen(t)?30:0;
+    const wrong=(state.wrong&&state.wrong[t.id])?-20:0;
+    const due=isDue(t.id)?-12:0;
+    const mastery=(state.mastery&&state.mastery[t.id]||0)*3;
+    return seen+wrong+due+mastery;
+  }
+  function v12Pick(pool,n,seed){
+    pool=(pool||[]).filter(Boolean);
+    const ordered=v12Shuffle(pool,seed||('pick'+Date.now())).sort((a,b)=>v12Priority(a)-v12Priority(b));
+    const out=[], concepts=new Set();
+    for(const t of ordered){if(out.length>=n)break;const c=v12Concept(t);if(concepts.has(c))continue;concepts.add(c);out.push(t)}
+    if(out.length<n){for(const t of ordered){if(out.length>=n)break;if(!out.includes(t))out.push(t)}}
+    return out.slice(0,n);
+  }
+
+  // ---------- Verben + Präpositionen: 5 recognition variants / concept ----------
+  function v12VpTasks(x){
+    const preps=[...new Set(LEARN.verbPrep.map(y=>y.prep))];
+    const pairs=[...new Set(LEARN.verbPrep.map(y=>`${y.prep} + ${y.case}`))];
+    const dm=daMap[x.prep];
+    const masked=v12MaskPrep(x.example,x.prep);
+    const list=[];
+    list.push({id:`t12-${x.id}-v0`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Präposition',prompt:`Welche Präposition gehört zu „${x.verb}“?`,context:masked!==x.example?masked:`${x.verb} ___`,options:v12Choice(x.prep,preps,x.id+'0'),answer:x.prep,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example});
+    list.push({id:`t12-${x.id}-v1`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Kasus',prompt:`Welchen Kasus verlangt „${x.verb} ${x.prep}“?`,context:`${x.verb} ${x.prep} …`,options:v12Choice(x.case,['Akkusativ','Dativ'],x.id+'1',2),answer:x.case,explain:`Feste Verbindung: ${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example});
+    if(dm)list.push({id:`t12-${x.id}-v2`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'da-/wo-Wort',prompt:`Wie fragt man bei einer Sache mit „${x.prep}“?`,context:`${x.verb} ${x.prep} …`,options:v12Choice(dm[0],Object.values(daMap).map(v=>v[0]),x.id+'2'),answer:dm[0],explain:`Frage: ${dm[0]} …? · Antwort: ${dm[1]} …`,postExample:x.example});
+    list.push({id:`t12-${x.id}-v3`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Kontext',prompt:'Welche Präposition ergänzt den Satz?',context:masked!==x.example?masked:`${x.verb} ___`,options:v12Choice(x.prep,preps,x.id+'3'),answer:x.prep,explain:`Im Kontext steht ${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example});
+    const pair=`${x.prep} + ${x.case}`;
+    list.push({id:`t12-${x.id}-v4`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Struktur',prompt:`Welche Präposition-Kasus-Struktur gehört zu „${x.verb}“?`,options:v12Choice(pair,pairs,x.id+'4'),answer:pair,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example});
+    return list;
+  }
+
+  // ---------- Wortschatz: 4 recognition variants / concept ----------
+  function v12VocabTasks(x){
+    const sameCat=LEARN.vocab.filter(y=>y.cat===x.cat);
+    const terms=LEARN.vocab.map(y=>y.de), defs=(sameCat.length>=4?sameCat:LEARN.vocab).map(y=>y.definition);
+    let cloze=v12MaskWord(x.example,x.de); if(cloze===x.example)cloze=`___ · ${x.definition}`;
+    return [
+      {id:`t12-${x.id}-v0`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:x.cat,prompt:x.definition,options:v12Choice(x.de,terms,x.id+'v0'),answer:x.de,explain:`${x.de}: ${x.definition}`,postExample:x.example},
+      {id:`t12-${x.id}-v1`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Kontext',prompt:'Welcher Begriff passt in diesen beruflichen Kontext?',context:cloze,options:v12Choice(x.de,terms,x.id+'v1'),answer:x.de,explain:`Begriff: ${x.de}.`,postExample:x.example},
+      {id:`t12-${x.id}-v2`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Bedeutung',prompt:`Was bedeutet „${x.de}“ am besten?`,options:v12Choice(x.definition,defs,x.id+'v2'),answer:x.definition,explain:`${x.de}: ${x.definition}`,postExample:x.example},
+      {id:`t12-${x.id}-v3`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:x.cat,prompt:`Welcher Begriff aus dem Bereich „${x.cat}“ passt?`,context:cloze,options:v12Choice(x.de,(sameCat.length>=4?sameCat:LEARN.vocab).map(y=>y.de),x.id+'v3'),answer:x.de,explain:`${x.de} gehört hier zum Bereich „${x.cat}“.`,postExample:x.example}
+    ];
+  }
+
+  // ---------- Nomen-Verb-Verbindungen: 3 variants / concept ----------
+  function v12CollTasks(x){
+    const s=splitColl(x.de), stems=LEARN.collocations.map(y=>splitColl(y.de).stem), verbs=LEARN.collocations.map(y=>splitColl(y.de).verb), full=LEARN.collocations.map(y=>y.de);
+    return [
+      {id:`t12-${x.id}-v0`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Nomen-Verb-Verbindung',prompt:`Ergänzen Sie die feste Verbindung: ${s.stem} ___`,options:v12Choice(s.verb,verbs,x.id+'c0'),answer:s.verb,explain:x.de,postExample:x.example},
+      {id:`t12-${x.id}-v1`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Kontext',prompt:'Welche feste Wortverbindung passt zum Beispiel?',context:x.example,options:v12Choice(x.de,full,x.id+'c1'),answer:x.de,explain:`Als Einheit lernen: ${x.de}.`,postExample:x.example},
+      {id:`t12-${x.id}-v2`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Baustein',prompt:`Welcher nominale Teil gehört zum Verb „${s.verb}“?`,options:v12Choice(s.stem,stems,x.id+'c2'),answer:s.stem,explain:x.de,postExample:x.example}
+    ];
+  }
+
+  // ---------- zu-Infinitiv: 3 variants / concept ----------
+  function v12ZuTasks(x){
+    const same=LEARN.zuInf.filter(y=>y.kind===x.kind), ctx=(typeof ZU_CONTEXTS!=='undefined'&&ZU_CONTEXTS[x.id])||v12MaskWord(x.example,x.word)||'___ + zu-Infinitiv';
+    return [
+      {id:`t12-${x.id}-v0`,concept:x.id,module:'zu',cat:'Grammatik',kind:'zu-Infinitiv',prompt:x.kind==='Verb'?'Welches Verb ergänzt den Satz?':x.kind==='Nomen'?'Welches Nomen ergänzt den Satz?':'Welches Adjektiv ergänzt den Satz?',context:ctx,options:v12Choice(x.word,same.map(y=>y.word),x.id+'z0'),answer:x.word,explain:`Struktur: ${x.word} + zu-Infinitiv.`,postExample:x.example},
+      {id:`t12-${x.id}-v1`,concept:x.id,module:'zu',cat:'Grammatik',kind:'Wortart',prompt:`Zu welcher Wortart gehört „${x.word}“ in dieser zu-Infinitiv-Struktur?`,options:v12Choice(x.kind,['Verb','Nomen','Adjektiv'],x.id+'z1',3),answer:x.kind,explain:`${x.word} ist hier ein ${x.kind}.`,postExample:x.example},
+      {id:`t12-${x.id}-v2`,concept:x.id,module:'zu',cat:'Grammatik',kind:'Struktur im Kontext',prompt:'Welche Struktur passt in den Satz?',context:ctx,options:v12Choice(x.word,LEARN.zuInf.map(y=>y.word),x.id+'z2'),answer:x.word,explain:`${x.word} + zu-Infinitiv.`,postExample:x.example}
+    ];
+  }
+
+  // ---------- Grammar: original task + rule recognition ----------
+  function v12GrammarTasks(x){
+    const topics=[...new Set(LEARN.grammar.map(y=>y.topic))];
+    return [
+      {id:`t12-${x.id}-v0`,concept:x.id,module:'grammar',cat:'Grammatik',kind:x.topic,prompt:x.prompt,options:v12Shuffle(x.options,x.id+'g0'),answer:x.answer,explain:x.explain},
+      {id:`t12-${x.id}-v1`,concept:x.id,module:'grammar',cat:'Grammatik',kind:'Regel erkennen',prompt:`Welches Grammatikthema wird hier erklärt?`,context:x.explain,options:v12Choice(x.topic,topics,x.id+'g1'),answer:x.topic,explain:`Thema: ${x.topic}.`}
+    ];
+  }
+
+  // ---------- Modal verbs: 3 variants / concept ----------
+  function v12ModalTasks(x){
+    const words=LEARN.modals.map(y=>y.word), rules=LEARN.modals.map(y=>y.rule);
+    return [
+      {id:`t12-${x.id}-v0`,concept:x.id,module:'modal',cat:'Grammatik',kind:'Modalverben',prompt:x.rule,options:v12Choice(x.word,words,x.id+'m0'),answer:x.word,explain:x.examples.join(' · '),postExample:x.examples[0]},
+      {id:`t12-${x.id}-v1`,concept:x.id,module:'modal',cat:'Grammatik',kind:'Bedeutung',prompt:`Welche Bedeutung/Regel passt zu „${x.word}“?`,options:v12Choice(x.rule,rules,x.id+'m1'),answer:x.rule,explain:x.examples.join(' · '),postExample:x.examples[0]},
+      {id:`t12-${x.id}-v2`,concept:x.id,module:'modal',cat:'Grammatik',kind:'Beispiel',prompt:'Welches Modalverb gehört zu dieser Regel und zum Beispiel?',context:x.examples[0],options:v12Choice(x.word,words,x.id+'m2'),answer:x.word,explain:x.rule,postExample:x.examples[0]}
+    ];
+  }
+
+  function allV12Recognition(){
+    const a=[];
+    LEARN.verbPrep.forEach(x=>a.push(...v12VpTasks(x)));
+    LEARN.vocab.forEach(x=>a.push(...v12VocabTasks(x)));
+    LEARN.collocations.forEach(x=>a.push(...v12CollTasks(x)));
+    LEARN.zuInf.forEach(x=>a.push(...v12ZuTasks(x)));
+    LEARN.grammar.forEach(x=>a.push(...v12GrammarTasks(x)));
+    LEARN.modals.forEach(x=>a.push(...v12ModalTasks(x)));
+    return a;
+  }
+
+  function allV12Production(){
+    const a=[];
+    LEARN.verbPrep.forEach(x=>{
+      a.push({id:`prod12-${x.id}-p0`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Aktiv schreiben',prompt:`Ergänzen Sie nur die Präposition: ${x.verb} ___`,input:true,answer:x.prep,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example});
+      a.push({id:`prod12-${x.id}-p1`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Kasus aktiv',prompt:`Welchen Kasus verlangt „${x.verb} ${x.prep}“?`,input:true,answer:x.case,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example});
+    });
+    LEARN.vocab.forEach(x=>a.push({id:`prod12-${x.id}-p0`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Aktiver Abruf',prompt:x.definition,input:true,answer:x.de,explain:`Gesuchter Begriff: ${x.de}.`,postExample:x.example}));
+    LEARN.collocations.forEach(x=>{const s=splitColl(x.de);a.push({id:`prod12-${x.id}-p0`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Aktiv schreiben',prompt:`Ergänzen Sie das Verb: ${s.stem} ___`,input:true,answer:s.verb,explain:x.de,postExample:x.example});a.push({id:`prod12-${x.id}-p1`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Ganze Verbindung',prompt:`Schreiben Sie die feste Nomen-Verb-Verbindung zum Beispiel.`,context:x.example,input:true,answer:x.de,explain:x.de,postExample:x.example})});
+    LEARN.zuInf.forEach(x=>{const ctx=(typeof ZU_CONTEXTS!=='undefined'&&ZU_CONTEXTS[x.id])||v12MaskWord(x.example,x.word);a.push({id:`prod12-${x.id}-p0`,concept:x.id,module:'zu',cat:'Grammatik',kind:'zu-Infinitiv aktiv',prompt:'Welches Wort ergänzt die Struktur?',context:ctx,input:true,answer:x.word,explain:`${x.word} + zu-Infinitiv.`,postExample:x.example})});
+    return a;
+  }
+
+  window.allGeneratedTasks=allGeneratedTasks=function(){return allV12Recognition()};
+  window.productionTasks=productionTasks=function(){return allV12Production()};
+  window.weightedTasks=weightedTasks=function(pool,n){return v12Pick(pool,n,'weighted-'+todayISO()+'-'+Date.now())};
+  window.startProduction=startProduction=function(n=14,ret='today'){startSession(v12Pick(allV12Production(),n,'prod-'+todayISO()+'-'+Date.now()),'production',ret)};
+  window.startAdaptive=startAdaptive=function(n=20,ret='today'){
+    const rec=v12Pick(allV12Recognition(),Math.ceil(n*.68),'adapt-r-'+Date.now());
+    const prod=v12Pick(allV12Production(),Math.floor(n*.32),'adapt-p-'+Date.now());
+    startSession(v12Shuffle([...rec,...prod],'adapt-final-'+Date.now()),'daily',ret);
+  };
+  window.startModule=startModule=function(id,n=16){
+    const rec=allV12Recognition().filter(t=>t.module===id), prod=allV12Production().filter(t=>t.module===id);
+    const prodN=Math.max(2,Math.round(n*.25));
+    startSession(v12Shuffle([...v12Pick(rec,n-prodN,'modr-'+id+Date.now()),...v12Pick(prod,prodN,'modp-'+id+Date.now())],'mod-'+id+Date.now()),'module','learn');
+  };
+  window.startWrongSession=startWrongSession=function(){
+    const ids=new Set(Object.keys(state.wrong||{}));
+    let pool=[...allV12Recognition(),...allV12Production()].filter(t=>ids.has(t.id));
+    if(!pool.length){
+      const concepts=new Set([...ids].map(id=>String(id).match(/(vp\d+|nv\d+|zv\d+|za\d+|zn\d+|v\d+|g\d+|m\d+)/)?.[1]).filter(Boolean));
+      pool=[...allV12Recognition(),...allV12Production()].filter(t=>concepts.has(v12Concept(t)));
+    }
+    if(!pool.length)pool=allV12Recognition();
+    startSession(v12Pick(pool,20,'wrong-'+Date.now()),'wrong',currentView==='home'?'home':'today');
+  };
+  window.startDiagnostic=startDiagnostic=function(){
+    const pool=allV12Recognition();
+    const by=(m,n)=>v12Pick(pool.filter(t=>t.module===m),n,'diag-'+m+todayISO());
+    startSession(v12Shuffle([...by('vp',5),...by('vocab',5),...by('coll',3),...by('grammar',4),...by('zu',3)],'diag-final-'+todayISO()),'diagnostic','today');
+  };
+  window.startSprachIntensiv=startSprachIntensiv=function(n=18){
+    const pool=allV12Recognition().filter(t=>['vp','coll','grammar','zu','modal'].includes(t.module));
+    startSession(v12Pick(pool,n,'sprach12-'+Date.now()),'daily','learn');
+  };
+
+  // ---------- Daily B2 check: fresh set, avoids recent daily IDs ----------
+  function originalSbPoolV12(){
+    const sb=[];[...(DATA.sprach1||[]),...(DATA.sprach2||[])].forEach(ex=>(ex.questions||[]).forEach(q=>{const correct=(q.options||[]).find(o=>o.key===q.answer);if(correct)sb.push({cat:'Sprachbausteine',kind:'Originalmaterial',prompt:`Welche Ergänzung ist korrekt? · Aufgabe ${q.n}`,body:ex.body,options:q.options.map(o=>o.text),answer:correct.text,explain:`Lösung aus Originalaufgabe, Seite ${ex.page}.`,id:`v12-sb-${ex.page}-${q.n}`})}));return sb;
+  }
+  function originalReadingPoolV12(){
+    const rd=[];(DATA.lesen2||[]).forEach(ex=>(ex.questions||[]).forEach(q=>{let opts=(q.options||[]).map(o=>o.text),ans=(q.options||[]).find(o=>o.key===q.answer)?.text;if(q.type==='tf'){opts=['Richtig','Falsch'];ans=q.answer==='r'?'Richtig':'Falsch'}if(ans)rd.push({cat:'Lesen',kind:'Originalmaterial',prompt:q.text||`Aufgabe ${q.n}`,body:ex.body,options:opts,answer:ans,explain:`Originaltext, Seite ${ex.page}.`,id:`v12-l-${ex.page}-${q.n}`})}));return rd;
+  }
+  window.makeDailyCheck=makeDailyCheck=function(date=todayISO()){
+    const rec=allV12Recognition();
+    const recent=new Set();Object.entries(state.v12.dailySets||{}).filter(([d])=>d!==date).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7).forEach(([,ids])=>(ids||[]).forEach(id=>recent.add(id)));
+    function fresh(m,n,seed){let p=rec.filter(t=>t.module===m&&!recent.has(t.id));if(p.length<n)p=rec.filter(t=>t.module===m);return v12Shuffle(p,seed).slice(0,n)}
+    let tasks=[...fresh('grammar',4,'dg'+date),...fresh('modal',2,'dm'+date),...fresh('vp',4,'dv'+date),...fresh('vocab',4,'dw'+date),...fresh('coll',2,'dc'+date),...fresh('zu',2,'dz'+date)];
+    let sb=originalSbPoolV12().filter(t=>!recent.has(t.id));if(sb.length<3)sb=originalSbPoolV12();tasks.push(...v12Shuffle(sb,'ds'+date).slice(0,3));
+    let rd=originalReadingPoolV12().filter(t=>!recent.has(t.id));if(rd.length<3)rd=originalReadingPoolV12();tasks.push(...v12Shuffle(rd,'dr'+date).slice(0,3));
+    tasks=v12Shuffle(tasks,'daily12-'+date).slice(0,24);
+    state.v12.dailySets[date]=tasks.map(t=>t.id);const keys=Object.keys(state.v12.dailySets).sort().slice(-21);state.v12.dailySets=Object.fromEntries(keys.map(k=>[k,state.v12.dailySets[k]]));save();
+    return tasks;
+  };
+
+  // ---------- Duels use the large deterministic pool ----------
+  window.challengePool=challengePool=function(theme){
+    let p=allV12Recognition().filter(t=>Array.isArray(t.options)&&t.options.length>=2);
+    if(theme==='vp')p=p.filter(t=>t.module==='vp');
+    if(theme==='vocab')p=p.filter(t=>t.module==='vocab');
+    if(theme==='grammar')p=p.filter(t=>['grammar','modal','coll'].includes(t.module));
+    if(theme==='sprach')p=p.filter(t=>['grammar','modal','coll','zu','vp'].includes(t.module));
+    return p;
+  };
+  if(typeof cloudTasks==='function')window.cloudTasks=cloudTasks=function(c){
+    let pool=challengePool(c.theme||'mix');
+    return v12Shuffle(pool,c.question_seed).slice(0,c.question_count).map((t,i)=>({...t,options:v12Shuffle(t.options,c.question_seed+'-'+i)}));
+  };
+
+  // ---------- Render context in ordinary sessions without leaking answers ----------
+  const oldRenderSession12=renderSession;
+  window.renderSession=renderSession=function(){
+    oldRenderSession12();
+    if(session.index>=session.tasks.length)return;
+    const t=session.tasks[session.index];const q=document.querySelector('#session .qcard');
+    if(q&&t.context&&!q.querySelector('.v12-context')){
+      const question=q.querySelector('.question');if(question)question.insertAdjacentHTML('afterend',`<div class="example v12-context">${esc(t.context)}</div>`);
+    }
+  };
+
+  // ---------- UX: make the size and no-repeat logic visible ----------
+  const oldLearn12=openLearn;
+  window.openLearn=openLearn=function(){oldLearn12();const root=document.getElementById('learn');if(!root)return;const back=root.querySelector('.backrow');if(back&&!root.querySelector('.v12-bank'))back.insertAdjacentHTML('afterend',`<div class="v10-focus-card v12-bank" style="margin-bottom:14px"><div class="section-head"><div><span class="v8-badge good">V12 · Übungsengine</span><h2 style="margin:8px 0 4px">${allV12Recognition().length+allV12Production().length} Übungsvarianten</h2><p>Ein Lerninhalt wird aus mehreren Blickwinkeln trainiert: erkennen, im Kontext wählen, Struktur bestimmen und aktiv schreiben. Neue Varianten kommen vor bereits gesehenen Aufgaben.</p></div><span class="tag">Wiederholung erst später</span></div></div>`)};
+  const oldTraining12=openTrainingHub;
+  window.openTrainingHub=openTrainingHub=function(){oldTraining12();const root=document.getElementById('trainingHub');if(!root)return;const back=root.querySelector('.backrow');if(back&&!root.querySelector('.v12-bank'))back.insertAdjacentHTML('afterend',`<div class="v10-focus-card v12-bank" style="margin-bottom:14px"><span class="v8-badge purple">ANTI-WIEDERHOLUNG</span><h2>${allV12Recognition().length} Auswahlaufgaben + ${allV12Production().length} aktive Aufgaben</h2><p>Innerhalb einer Einheit erscheint derselbe Lernbegriff möglichst nur einmal. Bereits bearbeitete Varianten werden nach hinten gestellt; Fehler und fällige Wiederholungen bleiben bewusst priorisiert.</p></div>`)};
+  const oldDailyOpen12=openDailyCheck;
+  window.openDailyCheck=openDailyCheck=function(){oldDailyOpen12();const hero=document.querySelector('#dailyCheck .v10-hero p');if(hero)hero.textContent='24 B2-orientierte Aufgaben. Der Aufgabenmix nutzt die große V12-Bibliothek und vermeidet soweit möglich Aufgaben aus den letzten Tages-Checks.'};
+  const oldHome12=renderHome;
+  window.renderHome=renderHome=function(){oldHome12();try{const kicker=document.querySelector('#home .v10-hero .v8-kicker');if(kicker)kicker.textContent=kicker.textContent.replace(/V\d+(?:\.\d+)?/,'V12');const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13'}catch(_){}};
+
+  // Initial marker.
+  try{const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13'}catch(_){}
+})();
+</script>
+
+
+<script id="v13-quality-engine">
+(function(){
+  // ============================================================
+  // V13 QUALITY ENGINE
+  // Eindeutige Lösungen, mehr Kontext, weniger Wiederholung.
+  // ============================================================
+  state.v13=state.v13||{dailySets:{}};
+  state.v13.dailySets=state.v13.dailySets||{};
+
+  const V13_COLL={"nv1": {"noun": "eine Entscheidung", "verb": "treffen", "post": "", "cloze": "Wir müssen heute eine Entscheidung ___.", "meaning": "sich nach Abwägung verbindlich für eine Möglichkeit entscheiden"}, "nv2": {"noun": "einen Antrag", "verb": "stellen", "post": "", "cloze": "Wenn Sie in Teilzeit arbeiten möchten, müssen Sie zuerst einen Antrag ___.", "meaning": "etwas offiziell bei einer Behörde oder Stelle beantragen"}, "nv3": {"noun": "eine Beschwerde", "verb": "einreichen", "post": "", "cloze": "Wenn die Ware erneut beschädigt ankommt, können Sie eine Beschwerde ___.", "meaning": "sich offiziell und schriftlich über ein Problem beschweren"}, "nv4": {"noun": "eine Frist", "verb": "einhalten", "post": "", "cloze": "Wir müssen die vereinbarte Frist unbedingt ___.", "meaning": "einen festgelegten Termin oder Zeitraum nicht überschreiten"}, "nv5": {"noun": "Verantwortung", "verb": "übernehmen", "post": "", "cloze": "Die Firma muss für den Fehler Verantwortung ___.", "meaning": "für Folgen oder Entscheidungen zuständig sein"}, "nv6": {"noun": "Maßnahmen", "verb": "ergreifen", "post": "", "cloze": "Um weitere Ausfälle zu vermeiden, müssen wir sofort Maßnahmen ___.", "meaning": "konkrete Schritte unternehmen, um ein Problem zu lösen"}, "nv7": {"noun": "Rücksicht", "verb": "nehmen", "post": "auf", "cloze": "Im Großraumbüro sollten alle Rücksicht aufeinander ___.", "meaning": "die Bedürfnisse anderer beachten"}, "nv8": {"noun": "etwas in Anspruch", "verb": "nehmen", "post": "", "cloze": "Bei Fragen können Sie unsere kostenlose Beratung in Anspruch ___.", "meaning": "ein Angebot oder eine Leistung nutzen"}, "nv9": {"noun": "zur Verfügung", "verb": "stehen", "post": "", "cloze": "Die Unterlagen müssen spätestens morgen zur Verfügung ___.", "meaning": "verfügbar und nutzbar sein"}, "nv10": {"noun": "zur Verfügung", "verb": "stellen", "post": "", "cloze": "Die Firma muss allen Mitarbeitenden die nötige Software zur Verfügung ___.", "meaning": "etwas für andere verfügbar machen"}, "nv11": {"noun": "Kontakt", "verb": "aufnehmen", "post": "mit", "cloze": "Bitte ___ Sie noch heute Kontakt mit dem Lieferanten ___.", "meaning": "beginnen, mit einer Person oder Firma zu kommunizieren"}, "nv12": {"noun": "eine Vereinbarung", "verb": "treffen", "post": "", "cloze": "Beide Seiten möchten noch heute eine verbindliche Vereinbarung ___.", "meaning": "gemeinsam etwas verbindlich absprechen"}, "nv13": {"noun": "einen Vorschlag", "verb": "machen", "post": "", "cloze": "Darf ich Ihnen einen alternativen Vorschlag ___?", "meaning": "eine Idee oder mögliche Lösung äußern"}, "nv14": {"noun": "einen Beitrag", "verb": "leisten", "post": "", "cloze": "Jeder kann einen Beitrag zu einem besseren Arbeitsklima ___.", "meaning": "durch eigenes Handeln zu einem Ergebnis beitragen"}, "nv15": {"noun": "in Betracht", "verb": "ziehen", "post": "", "cloze": "Wir sollten auch einen Wechsel des Lieferanten in Betracht ___.", "meaning": "eine Möglichkeit ernsthaft erwägen"}, "nv16": {"noun": "zur Kenntnis", "verb": "nehmen", "post": "", "cloze": "Bitte ___ Sie die geänderten Öffnungszeiten zur Kenntnis.", "meaning": "eine Information bewusst wahrnehmen und akzeptieren"}, "nv17": {"noun": "eine Rolle", "verb": "spielen", "post": "", "cloze": "Berufserfahrung kann bei der Auswahl eine wichtige Rolle ___.", "meaning": "für etwas wichtig oder relevant sein"}, "nv18": {"noun": "eine Lösung", "verb": "finden", "post": "", "cloze": "Wir müssen gemeinsam schnell eine tragfähige Lösung ___.", "meaning": "einen geeigneten Weg zur Behebung eines Problems entdecken"}, "nv19": {"noun": "eine Bestellung", "verb": "aufgeben", "post": "", "cloze": "Wir möchten heute noch eine größere Bestellung ___.", "meaning": "Waren oder Dienstleistungen verbindlich bestellen"}, "nv20": {"noun": "einen Auftrag", "verb": "erteilen", "post": "", "cloze": "Die Geschäftsleitung möchte der Agentur heute den Auftrag ___.", "meaning": "jemanden offiziell mit einer Aufgabe beauftragen"}, "nv21": {"noun": "eine Rechnung", "verb": "begleichen", "post": "", "cloze": "Bitte ___ Sie die offene Rechnung innerhalb von 14 Tagen.", "meaning": "eine Rechnung vollständig bezahlen"}, "nv22": {"noun": "eine Zahlung", "verb": "leisten", "post": "", "cloze": "Der Kunde muss die ausstehende Zahlung bis Freitag ___.", "meaning": "einen geschuldeten Geldbetrag bezahlen"}, "nv23": {"noun": "eine Zusage", "verb": "machen", "post": "", "cloze": "Vor der endgültigen Prüfung können wir noch keine verbindliche Zusage ___.", "meaning": "etwas verbindlich versprechen oder bestätigen"}, "nv24": {"noun": "einen Termin", "verb": "vereinbaren", "post": "", "cloze": "Ich möchte gern einen Termin für nächste Woche ___.", "meaning": "gemeinsam einen Zeitpunkt festlegen"}, "nv25": {"noun": "Kritik", "verb": "üben", "post": "an", "cloze": "Mehrere Mitarbeitende wollen an der neuen Regelung Kritik ___.", "meaning": "etwas ausdrücklich negativ beurteilen"}, "nv26": {"noun": "Einfluss", "verb": "nehmen", "post": "auf", "cloze": "Hohe Energiekosten können auf die Planung großen Einfluss ___.", "meaning": "die Entwicklung oder Entscheidung mitbestimmen"}, "nv27": {"noun": "Fortschritte", "verb": "machen", "post": "", "cloze": "Mit regelmäßigem Training können Sie schnell Fortschritte ___.", "meaning": "sich merklich verbessern"}, "nv28": {"noun": "eine Voraussetzung", "verb": "erfüllen", "post": "", "cloze": "Für die Stelle müssen Bewerbende mehrere Voraussetzungen ___.", "meaning": "eine notwendige Bedingung erfüllen"}, "nv29": {"noun": "einen Anspruch geltend", "verb": "machen", "post": "", "cloze": "Beschäftigte können ihren gesetzlichen Anspruch schriftlich geltend ___.", "meaning": "ein bestehendes Recht offiziell einfordern"}, "nv30": {"noun": "einen Fehler", "verb": "beheben", "post": "", "cloze": "Der Techniker muss den Fehler noch heute ___.", "meaning": "einen technischen oder sachlichen Fehler korrigieren"}};
+  const V13_WRITE_MINI={"beschwerde": [{"p": "Welche Reaktion ist in einer professionellen Beschwerdeantwort am passendsten?", "o": ["Wir bedauern die entstandenen Unannehmlichkeiten sehr.", "Dafür können wir nichts.", "Sie übertreiben das Problem.", "Das ist eben passiert."], "a": "Wir bedauern die entstandenen Unannehmlichkeiten sehr.", "e": "Eine professionelle Antwort zeigt Verständnis und bleibt sachlich."}, {"p": "Was muss bei einer Prüfungsaufgabe zuerst vollständig erfasst werden?", "o": ["Alle Vorgaben der internen Anweisung.", "Möglichst viele eigene Zusatzangebote.", "Nur der Ärger des Kunden.", "Nur die Grußformel."], "a": "Alle Vorgaben der internen Anweisung.", "e": "Die Aufgabenpunkte der internen Anweisung bestimmen den Inhalt Ihrer Antwort."}, {"p": "Welche Formulierung erklärt eine Ursache professionell?", "o": ["Nach Rücksprache mit unserer Logistik hat sich herausgestellt, dass …", "Keine Ahnung, warum das passiert ist.", "Da hat jemand Mist gebaut.", "Das war einfach Pech."], "a": "Nach Rücksprache mit unserer Logistik hat sich herausgestellt, dass …", "e": "Die Ursache sollte sachlich, nachvollziehbar und ohne Umgangssprache erklärt werden."}, {"p": "Welche Formulierung leitet eine konkrete Lösung ein?", "o": ["Als Lösung möchten wir Ihnen Folgendes anbieten: …", "Vielleicht klappt es irgendwann.", "Warten Sie einfach ab.", "Mehr können wir nicht tun."], "a": "Als Lösung möchten wir Ihnen Folgendes anbieten: …", "e": "Eine Lösung muss konkret und handlungsorientiert sein."}, {"p": "Welche Formulierung eignet sich, um eine Zusage zu machen?", "o": ["Wir sorgen dafür, dass die Ersatzlieferung morgen versendet wird.", "Wir schauen mal.", "Eigentlich ist das nicht unser Problem.", "Vielleicht meldet sich jemand."], "a": "Wir sorgen dafür, dass die Ersatzlieferung morgen versendet wird.", "e": "Eine Zusage sollte klar sagen, was als Nächstes passiert."}, {"p": "Welche Aussage vermeidet ein unnötiges Schuldeingeständnis?", "o": ["Wir bedauern die Unannehmlichkeiten und prüfen den Vorgang umgehend.", "Wir sind für sämtliche Schäden verantwortlich.", "Unser Mitarbeiter ist eindeutig schuld.", "Wir haben alles falsch gemacht."], "a": "Wir bedauern die Unannehmlichkeiten und prüfen den Vorgang umgehend.", "e": "Verständnis zeigen ist möglich, ohne ungeprüft rechtliche Verantwortung zu übernehmen."}, {"p": "Welche Reihenfolge ist für eine Beschwerdeantwort sinnvoll?", "o": ["Bezug → Verständnis → Ursache → Lösung → Schluss", "Lösung → Gruß → Ursache → Anrede", "Schluss → Beschwerde → neue Themen", "Rabatt → Ausrede → Gruß"], "a": "Bezug → Verständnis → Ursache → Lösung → Schluss", "e": "Diese Reihenfolge schafft einen klaren professionellen Aufbau."}, {"p": "Welche Formulierung greift die Nachricht des Kunden direkt auf?", "o": ["Vielen Dank für Ihre Nachricht bezüglich der verspäteten Lieferung.", "Wie geht es Ihnen sonst so?", "Wir schreiben heute über ein anderes Thema.", "Zunächst zu unserer neuen Werbung."], "a": "Vielen Dank für Ihre Nachricht bezüglich der verspäteten Lieferung.", "e": "Der Bezug zeigt sofort, dass die konkrete Beschwerde verstanden wurde."}, {"p": "Welche Formulierung ist für eine Frist besonders klar?", "o": ["Wir senden die Ersatzteile spätestens bis Freitag, den 4. September.", "Wir senden sie bald.", "Wir versuchen es demnächst.", "Irgendwann diese Woche müsste es gehen."], "a": "Wir senden die Ersatzteile spätestens bis Freitag, den 4. September.", "e": "Konkrete Termine machen Lösungen überprüfbar."}, {"p": "Was sollte man NICHT automatisch anbieten, wenn die Aufgabe es nicht verlangt?", "o": ["Einen Rabatt oder eine Entschädigung erfinden.", "Die Ursache erklären.", "Auf die Beschwerde eingehen.", "Eine verlangte Lösung umsetzen."], "a": "Einen Rabatt oder eine Entschädigung erfinden.", "e": "Im Prüfungsformat sollten keine unnötigen Versprechen erfunden werden."}, {"p": "Welche Formulierung bittet professionell um eine Rückmeldung?", "o": ["Bitte teilen Sie uns mit, ob dieser Termin für Sie passend ist.", "Schreiben Sie halt zurück.", "Melden Sie sich irgendwann.", "Sie müssen uns sofort antworten!"], "a": "Bitte teilen Sie uns mit, ob dieser Termin für Sie passend ist.", "e": "Die Bitte ist höflich, klar und handlungsorientiert."}, {"p": "Welcher Schluss passt zu einer geschäftlichen E-Mail?", "o": ["Vielen Dank für Ihr Verständnis. Mit freundlichen Grüßen", "Na dann, tschüss!", "Bis irgendwann", "LG!!!"], "a": "Vielen Dank für Ihr Verständnis. Mit freundlichen Grüßen", "e": "Der Schluss bleibt professionell und zum Register der Aufgabe passend."}, {"p": "Welche Variante verbindet Entschuldigung und Lösung am besten?", "o": ["Wir bedauern die Verzögerung. Die fehlenden Artikel versenden wir heute per Express.", "Tut uns leid. Keine Ahnung, was wir machen.", "Sorry, aber warten Sie.", "Wir entschuldigen uns, obwohl wir nichts ändern."], "a": "Wir bedauern die Verzögerung. Die fehlenden Artikel versenden wir heute per Express.", "e": "B2-Texte wirken stärker, wenn Verständnis direkt mit konkretem Handeln verbunden wird."}, {"p": "Welche Formulierung ist sachlich und kundenorientiert?", "o": ["Wir können nachvollziehen, dass die Verzögerung für Sie besonders ärgerlich ist.", "Sie reagieren viel zu empfindlich.", "Das passiert jedem.", "Sie müssen dafür Verständnis haben."], "a": "Wir können nachvollziehen, dass die Verzögerung für Sie besonders ärgerlich ist.", "e": "Die Formulierung erkennt die Perspektive des Kunden an, ohne unprofessionell zu werden."}], "forum": [{"p": "Welche Formulierung leitet ein Gegenargument passend ein?", "o": ["Andererseits sollte man bedenken, dass …", "Mit freundlichen Grüßen", "Hiermit beschwere ich mich.", "Übrigens war gestern Montag."], "a": "Andererseits sollte man bedenken, dass …", "e": "„Andererseits“ markiert einen klaren Perspektivwechsel."}, {"p": "Was macht eine B2-Meinung überzeugender?", "o": ["Meinung + Begründung + konkreter Bezug.", "Nur „Ich finde das gut.“", "Viele Ausrufezeichen.", "Nur ein einzelnes Stichwort."], "a": "Meinung + Begründung + konkreter Bezug.", "e": "Eine begründete Position zeigt argumentative Kontrolle."}, {"p": "Welche Einleitung passt zu einem Forumsbeitrag unter Kolleginnen und Kollegen?", "o": ["Viele von Ihnen wissen wahrscheinlich schon, dass …", "Sehr geehrtes Gericht,", "Hiermit mahne ich Sie ab.", "Rechnung Nr. 2026/14"], "a": "Viele von Ihnen wissen wahrscheinlich schon, dass …", "e": "Die Formulierung führt das Thema passend in den Kollegenkontext ein."}, {"p": "Welche Struktur eignet sich für eine ausgewogene Argumentation?", "o": ["einerseits … andererseits …", "weder Anrede noch Schluss", "nur Fragen", "ausschließlich Ausrufe"], "a": "einerseits … andererseits …", "e": "Die Paarstruktur hilft, zwei Seiten klar gegenüberzustellen."}, {"p": "Welche Formulierung führt ein zusätzliches Argument ein?", "o": ["Ein weiterer Vorteil besteht darin, dass …", "Trotzdem Ende.", "Mit freundlichen Rechnungen", "Das ist verboten."], "a": "Ein weiterer Vorteil besteht darin, dass …", "e": "Die Formulierung erweitert die Argumentation transparent."}, {"p": "Welche Formulierung kennzeichnet die eigene Position klar?", "o": ["Meiner Meinung nach wäre eine flexible Lösung sinnvoll, weil …", "Alle wissen doch, dass ich recht habe.", "Das ist einfach so.", "Keine Ahnung, aber egal."], "a": "Meiner Meinung nach wäre eine flexible Lösung sinnvoll, weil …", "e": "Position und Begründung sollten zusammengehören."}, {"p": "Welche Aussage ist ein echtes Argument und nicht nur eine Behauptung?", "o": ["Homeoffice kann Wegezeiten reduzieren, wodurch Beschäftigte täglich Zeit sparen.", "Homeoffice ist super.", "Das finde ich halt besser.", "Jeder weiß, dass es stimmt."], "a": "Homeoffice kann Wegezeiten reduzieren, wodurch Beschäftigte täglich Zeit sparen.", "e": "Ein Argument enthält einen nachvollziehbaren Grund oder eine Folge."}, {"p": "Welcher Konnektor eignet sich für einen Gegensatz?", "o": ["allerdings", "deshalb", "zum Beispiel", "zuerst"], "a": "allerdings", "e": "„allerdings“ relativiert oder kontrastiert eine vorherige Aussage."}, {"p": "Welcher Konnektor eignet sich für eine Folge?", "o": ["deshalb", "obwohl", "einerseits", "während"], "a": "deshalb", "e": "„deshalb“ leitet eine Konsequenz ein."}, {"p": "Welche Formulierung eignet sich für ein konkretes Beispiel?", "o": ["Ein gutes Beispiel dafür ist …", "Abschließend ohne Beispiel …", "Das ist immer so.", "Alle denken das."], "a": "Ein gutes Beispiel dafür ist …", "e": "Beispiele machen abstrakte Argumente nachvollziehbarer."}, {"p": "Welche Reihenfolge ist für einen Forumsbeitrag sinnvoll?", "o": ["Thema → Pro/Contra → eigene Meinung → Schluss", "Schluss → Thema → Anrede → Zufall", "Nur Meinung → Gruß", "Beschwerde → Rechnung → Termin"], "a": "Thema → Pro/Contra → eigene Meinung → Schluss", "e": "Der klare Aufbau hilft dem Leser, der Argumentation zu folgen."}, {"p": "Welche Schlussformulierung fasst eine Position professionell zusammen?", "o": ["Abschließend bin ich der Meinung, dass eine freiwillige Regelung am sinnvollsten wäre.", "Das war's.", "Ende.", "Mehr gibt es nicht zu sagen!"], "a": "Abschließend bin ich der Meinung, dass eine freiwillige Regelung am sinnvollsten wäre.", "e": "Ein guter Schluss bündelt die Position, statt ein neues Hauptargument zu beginnen."}, {"p": "Welche Formulierung räumt einen Einwand ein?", "o": ["Zwar bietet die Regelung Vorteile, dennoch entstehen zusätzliche Kosten.", "Die Regelung ist gut, Punkt.", "Kosten existieren nicht.", "Ich ignoriere die andere Seite."], "a": "Zwar bietet die Regelung Vorteile, dennoch entstehen zusätzliche Kosten.", "e": "„zwar … dennoch“ zeigt, dass Sie Gegenargumente sprachlich kontrolliert einbeziehen."}, {"p": "Was sollte ein B2-Forumsbeitrag vermeiden?", "o": ["Nur kurze, unverbundene Behauptungen ohne Begründung.", "Konnektoren zwischen Argumenten.", "Eine nachvollziehbare eigene Position.", "Ein konkretes Beispiel."], "a": "Nur kurze, unverbundene Behauptungen ohne Begründung.", "e": "Kohärenz und Begründungen sind wichtiger als eine Sammlung isolierter Sätze."}]};
+
+  function h13(s){let h=2166136261>>>0;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+  function r13(seed){let x=h13(seed)||123456789;return()=>{x+=0x6D2B79F5;let t=x;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+  function sh13(arr,seed){const a=[...arr],r=r13(seed);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  function uniq13(a){const out=[];const seen=new Set();for(const x of a){const k=norm(String(x));if(!seen.has(k)){seen.add(k);out.push(x)}}return out}
+  function choice13(correct,pool,seed,n=4){
+    const vals=uniq13((pool||[]).filter(x=>x!=null&&String(x).trim())).filter(x=>norm(String(x))!==norm(String(correct)));
+    return sh13([correct,...sh13(vals,seed+'d').slice(0,Math.max(0,n-1))],seed+'o');
+  }
+  function concept13(t){return t.concept||String(t.id||'').match(/(vp\d+|nv\d+|zv\d+|za\d+|zn\d+|v\d+|g\d+|m\d+)/)?.[1]||t.id}
+  function priority13(t){
+    const seen=state.review&&state.review[t.id]?28:0;
+    const wrong=state.wrong&&state.wrong[t.id]?-22:0;
+    const due=typeof isDue==='function'&&isDue(t.id)?-12:0;
+    const mastery=(state.mastery&&state.mastery[t.id]||0)*3;
+    return seen+wrong+due+mastery;
+  }
+  function pick13(pool,n,seed){
+    const ordered=sh13((pool||[]).filter(Boolean),seed).sort((a,b)=>priority13(a)-priority13(b));
+    const out=[],used=new Set();
+    for(const t of ordered){if(out.length>=n)break;const c=concept13(t);if(used.has(c))continue;used.add(c);out.push(t)}
+    if(out.length<n)for(const t of ordered){if(out.length>=n)break;if(!out.includes(t))out.push(t)}
+    return out.slice(0,n);
+  }
+  function maskPrep13(s,p){
+    const rx=new RegExp('\\b'+String(p).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i');
+    return rx.test(String(s||''))?String(s).replace(rx,'___'):String(s||'');
+  }
+  function maskWord13(sentence,word){
+    sentence=String(sentence||'');word=String(word||'').trim();if(!sentence||!word)return sentence;
+    const bare=word.replace(/^(der|die|das|den|dem|des|ein|eine|einen|einem|einer)\s+/i,'').trim();
+    const candidates=[word,bare].filter(Boolean).sort((a,b)=>b.length-a.length);
+    for(const c of candidates){
+      const rx=new RegExp(c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i');
+      if(rx.test(sentence))return sentence.replace(rx,'___');
+    }
+    return sentence;
+  }
+
+  // ---------- Feste Verbindungen: only one defensible answer ----------
+  const validCollSet=new Set(LEARN.collocations.map(x=>norm(x.de)));
+  const collVerbs=uniq13(Object.values(V13_COLL).map(x=>x.verb));
+  const collNouns=uniq13(Object.values(V13_COLL).map(x=>x.noun));
+  function collFull(m,verb=m.verb){return [m.noun,verb,m.post].filter(Boolean).join(' ')}
+  function wrongPairOptions13(x,seed){
+    const m=V13_COLL[x.id];const wrong=[];
+    for(const v of sh13(collVerbs,seed)){
+      const candidate=collFull(m,v);
+      if(norm(candidate)===norm(x.de)||validCollSet.has(norm(candidate)))continue;
+      wrong.push(candidate);if(wrong.length===3)break;
+    }
+    return sh13([x.de,...wrong],seed+'pair');
+  }
+  function collVerbOptions13(x,seed){
+    const m=V13_COLL[x.id];const bad=sh13(collVerbs.filter(v=>v!==m.verb),seed).filter(v=>!validCollSet.has(norm(collFull(m,v))));
+    return sh13([m.verb,...bad.slice(0,3)],seed+'v');
+  }
+  function v13CollTasks(x){
+    const m=V13_COLL[x.id]||{noun:x.de,verb:'',post:'',cloze:x.example,meaning:x.example};
+    const fullOptions=LEARN.collocations.map(y=>y.de);
+    return [
+      {id:`t13-${x.id}-c0`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Feste Verbindung',prompt:'Welche Variante ist die übliche feste Nomen-Verb-Verbindung im Standarddeutsch?',options:wrongPairOptions13(x,x.id+'c0'),answer:x.de,explain:`Als feste Einheit lernen: ${x.de}. Die anderen Kombinationen wurden absichtlich als Distraktoren gebildet.`,postExample:x.example},
+      {id:`t13-${x.id}-c1`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Verb im Kontext',prompt:'Welches Verb ergänzt die feste Verbindung?',context:m.cloze,options:collVerbOptions13(x,x.id+'c1'),answer:m.verb,explain:`Die feste Verbindung lautet „${x.de}“.`,postExample:x.example},
+      {id:`t13-${x.id}-c2`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Bedeutung',prompt:'Welche feste Verbindung drückt diese Bedeutung am besten aus?',context:m.meaning,options:choice13(x.de,fullOptions,x.id+'c2'),answer:x.de,explain:`Gemeinte Verbindung: ${x.de}.`,postExample:x.example},
+      {id:`t13-${x.id}-c3`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Baustein',prompt:`Welches Verb gehört in der Standardsprache zu „${m.noun}“${m.post?' + '+m.post:''}?`,context:m.meaning,options:collVerbOptions13(x,x.id+'c3'),answer:m.verb,explain:`${m.noun} + ${m.verb}${m.post?' + '+m.post:''}.`,postExample:x.example},
+      {id:`t13-${x.id}-c4`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Kontext erkennen',prompt:'Welche ganze feste Verbindung wird in diesem Satz gebraucht?',context:m.cloze,options:choice13(x.de,fullOptions,x.id+'c4'),answer:x.de,explain:`Der Satz aktiviert die Verbindung „${x.de}“.`,postExample:x.example}
+    ];
+  }
+
+  // ---------- Verben + Präpositionen: context disambiguates verbs such as sprechen ----------
+  function v13VpTasks(x){
+    const preps=uniq13(LEARN.verbPrep.map(y=>y.prep));
+    const pairs=uniq13(LEARN.verbPrep.map(y=>`${y.prep} + ${y.case}`));
+    const ctx=maskPrep13(x.example,x.prep);
+    const dm=(typeof daMap!=='undefined'&&daMap[x.prep])||null;
+    const out=[
+      {id:`t13-${x.id}-p0`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Präposition im Kontext',prompt:'Welche Präposition ergänzt den Satz?',context:ctx,options:choice13(x.prep,preps,x.id+'p0'),answer:x.prep,explain:`Hier gilt: ${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example},
+      {id:`t13-${x.id}-p1`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Kasus',prompt:`Welchen Kasus verlangt „${x.verb} ${x.prep}“ in dieser Verbindung?`,options:choice13(x.case,['Akkusativ','Dativ'],x.id+'p1',2),answer:x.case,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example},
+      {id:`t13-${x.id}-p3`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Struktur',prompt:'Welche Präposition-Kasus-Struktur passt zum gezeigten Satz?',context:ctx,options:choice13(`${x.prep} + ${x.case}`,pairs,x.id+'p3'),answer:`${x.prep} + ${x.case}`,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example},
+      {id:`t13-${x.id}-p4`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Bedeutung im Satz',prompt:`Welche Präposition gehört zu „${x.verb}“ genau in der hier gezeigten Bedeutung?`,context:ctx,options:choice13(x.prep,preps,x.id+'p4'),answer:x.prep,explain:'Der Kontext entscheidet bei Verben, die mehrere Präpositionen haben können.',postExample:x.example}
+    ];
+    if(dm)out.splice(2,0,{id:`t13-${x.id}-p2`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'da-/wo-Wort',prompt:`Wie fragt man bei einer Sache mit „${x.prep}“?`,context:`${x.verb} ${x.prep} …`,options:choice13(dm[0],Object.values(daMap).map(v=>v[0]),x.id+'p2'),answer:dm[0],explain:`Frage: ${dm[0]} …? · Antwort: ${dm[1]} …`,postExample:x.example});
+    return out;
+  }
+
+  // ---------- Wortschatz: five directions, not one repeated template ----------
+  function v13VocabTasks(x){
+    const same=LEARN.vocab.filter(y=>y.cat===x.cat);const terms=LEARN.vocab.map(y=>y.de);
+    const defs=(same.length>=4?same:LEARN.vocab).map(y=>y.definition);
+    const cloze=maskWord13(x.example,x.de);const context=cloze===x.example?`___ · ${x.definition}`:cloze;
+    const contextPool=(same.length>=4?same:LEARN.vocab).map(y=>{const z=maskWord13(y.example,y.de);return z===y.example?`___ · ${y.definition}`:z});
+    const ownContext=context;
+    return [
+      {id:`t13-${x.id}-v0`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Definition → Begriff',prompt:x.definition,options:choice13(x.de,terms,x.id+'v0'),answer:x.de,explain:`${x.de}: ${x.definition}`,postExample:x.example},
+      {id:`t13-${x.id}-v1`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Kontext → Begriff',prompt:'Welcher Begriff passt in diesen beruflichen Kontext?',context,options:choice13(x.de,terms,x.id+'v1'),answer:x.de,explain:`Gesuchter Begriff: ${x.de}.`,postExample:x.example},
+      {id:`t13-${x.id}-v2`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Begriff → Bedeutung',prompt:`Was bedeutet „${x.de}“ am besten?`,options:choice13(x.definition,defs,x.id+'v2'),answer:x.definition,explain:`${x.de}: ${x.definition}`,postExample:x.example},
+      {id:`t13-${x.id}-v3`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Fachbereich + Kontext',prompt:`Welcher Begriff aus dem Bereich „${x.cat}“ passt?`,context,options:choice13(x.de,(same.length>=4?same:LEARN.vocab).map(y=>y.de),x.id+'v3'),answer:x.de,explain:`${x.de} passt hier zum Bereich „${x.cat}“.`,postExample:x.example},
+      {id:`t13-${x.id}-v4`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Gebrauch erkennen',prompt:`Welcher anonymisierte Beispielsatz passt am besten zu „${x.de}“?`,options:choice13(ownContext,contextPool,x.id+'v4'),answer:ownContext,explain:`Bedeutung: ${x.definition}`,postExample:x.example}
+    ];
+  }
+
+  // ---------- zu + Infinitiv ----------
+  function v13ZuTasks(x){
+    const same=LEARN.zuInf.filter(y=>y.kind===x.kind);
+    const ctx=(typeof ZU_CONTEXTS!=='undefined'&&ZU_CONTEXTS[x.id])||maskWord13(x.example,x.word)||'___ + zu-Infinitiv';
+    return [
+      {id:`t13-${x.id}-z0`,concept:x.id,module:'zu',cat:'Grammatik',kind:'zu-Infinitiv im Satz',prompt:x.kind==='Verb'?'Welches Verb ergänzt den Satz?':x.kind==='Nomen'?'Welches Nomen ergänzt den Satz?':'Welches Adjektiv ergänzt den Satz?',context:ctx,options:choice13(x.word,same.map(y=>y.word),x.id+'z0'),answer:x.word,explain:`Struktur: ${x.word} + zu-Infinitiv.`,postExample:x.example},
+      {id:`t13-${x.id}-z1`,concept:x.id,module:'zu',cat:'Grammatik',kind:'Wortart',prompt:`Zu welcher Wortart gehört „${x.word}“ in dieser Struktur?`,options:choice13(x.kind,['Verb','Nomen','Adjektiv'],x.id+'z1',3),answer:x.kind,explain:`${x.word} ist hier ein ${x.kind}.`,postExample:x.example},
+      {id:`t13-${x.id}-z2`,concept:x.id,module:'zu',cat:'Grammatik',kind:'Struktur im Kontext',prompt:'Welche Struktur passt in den Satz?',context:ctx,options:choice13(x.word,LEARN.zuInf.map(y=>y.word),x.id+'z2'),answer:x.word,explain:`${x.word} + zu-Infinitiv.`,postExample:x.example}
+    ];
+  }
+
+  // ---------- Grammar + active recall ----------
+  function v13GrammarTasks(x){
+    const topics=uniq13(LEARN.grammar.map(y=>y.topic));
+    return [
+      {id:`t13-${x.id}-g0`,concept:x.id,module:'grammar',cat:'Grammatik',kind:x.topic,prompt:x.prompt,options:sh13(x.options,x.id+'g0'),answer:x.answer,explain:x.explain},
+      {id:`t13-${x.id}-g1`,concept:x.id,module:'grammar',cat:'Grammatik',kind:'Regel erkennen',prompt:'Welches Grammatikthema wird mit dieser Regel hauptsächlich trainiert?',context:x.explain,options:choice13(x.topic,topics,x.id+'g1'),answer:x.topic,explain:`Thema: ${x.topic}.`}
+    ];
+  }
+
+  function modalMasked13(x){
+    let s=String(x.examples[0]||'');
+    const forms={
+      'müssen':['müssen','muss','musst','müsst','musste','mussten'],
+      'können':['können','kann','kannst','könnt','konnte','konnten'],
+      'sollen':['sollen','soll','sollst','sollt','sollte','sollten'],
+      'wollen':['wollen','will','willst','wollt','wollte','wollten','möchte','möchten'],
+      'dürfen':['dürfen','darf','darfst','dürft','durfte','durften'],
+      'mögen':['mögen','mag','magst','mögt','mochte','mochten']
+    }[x.word]||[x.word];
+    for(const f of forms){const rx=new RegExp('\\b'+f+'\\b','i');if(rx.test(s))return s.replace(rx,'___')}
+    return s;
+  }
+  function v13ModalTasks(x){
+    const words=LEARN.modals.map(y=>y.word),rules=LEARN.modals.map(y=>y.rule),ctx=modalMasked13(x);
+    return [
+      {id:`t13-${x.id}-m0`,concept:x.id,module:'modal',cat:'Grammatik',kind:'Modalverb nach Bedeutung',prompt:x.rule,options:choice13(x.word,words,x.id+'m0'),answer:x.word,explain:x.examples.join(' · '),postExample:x.examples[0]},
+      {id:`t13-${x.id}-m1`,concept:x.id,module:'modal',cat:'Grammatik',kind:'Bedeutung',prompt:`Welche Bedeutung/Regel passt zu „${x.word}“?`,options:choice13(x.rule,rules,x.id+'m1'),answer:x.rule,explain:x.examples.join(' · '),postExample:x.examples[0]},
+      {id:`t13-${x.id}-m2`,concept:x.id,module:'modal',cat:'Grammatik',kind:'Modalverb im Satz',prompt:'Welches Modalverb ergänzt den Satz sinngemäß?',context:ctx,options:choice13(x.word,words,x.id+'m2'),answer:x.word,explain:x.rule,postExample:x.examples[0]}
+    ];
+  }
+
+  function allRec13(){
+    const a=[];LEARN.verbPrep.forEach(x=>a.push(...v13VpTasks(x)));LEARN.vocab.forEach(x=>a.push(...v13VocabTasks(x)));LEARN.collocations.forEach(x=>a.push(...v13CollTasks(x)));LEARN.zuInf.forEach(x=>a.push(...v13ZuTasks(x)));LEARN.grammar.forEach(x=>a.push(...v13GrammarTasks(x)));LEARN.modals.forEach(x=>a.push(...v13ModalTasks(x)));return a.map(quality13).filter(Boolean);
+  }
+  function quality13(t){
+    if(!t)return null;
+    if(Array.isArray(t.options)){
+      t.options=uniq13(t.options);
+      if(!t.options.some(o=>norm(String(o))===norm(String(t.answer))))t.options.unshift(t.answer);
+      if(t.options.length<2)return null;
+    }
+    // A context must not visibly contain the exact answer when the task asks for that answer.
+    if(t.context&&typeof t.answer==='string'&&t.answer.length>2&&norm(t.context).includes(norm(t.answer))&&['VerbPräp','Wortschatz'].includes(t.cat)){
+      t.context=maskWord13(t.context,t.answer);
+    }
+    return t;
+  }
+
+  function allProd13(){
+    const a=[];
+    LEARN.verbPrep.forEach(x=>{
+      const ctx=maskPrep13(x.example,x.prep);
+      a.push({id:`prod13-${x.id}-p0`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Präposition aktiv',prompt:'Schreiben Sie nur die fehlende Präposition.',context:ctx,input:true,answer:x.prep,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example});
+      a.push({id:`prod13-${x.id}-p1`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Kasus aktiv',prompt:`Welchen Kasus verlangt „${x.verb} ${x.prep}“?`,input:true,answer:x.case,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:x.example});
+    });
+    LEARN.vocab.forEach(x=>a.push({id:`prod13-${x.id}-p0`,concept:x.id,module:'vocab',cat:'Wortschatz',kind:'Aktiver Abruf',prompt:x.definition,input:true,answer:x.de,explain:`Gesuchter Begriff: ${x.de}.`,postExample:x.example}));
+    LEARN.collocations.forEach(x=>{const m=V13_COLL[x.id];a.push({id:`prod13-${x.id}-p0`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Verb aktiv',prompt:'Schreiben Sie das fehlende Verb der festen Verbindung.',context:m.cloze,input:true,answer:m.verb,explain:x.de,postExample:x.example});a.push({id:`prod13-${x.id}-p1`,concept:x.id,module:'coll',cat:'Kollokation',kind:'Ganze Verbindung aktiv',prompt:'Schreiben Sie die passende feste Nomen-Verb-Verbindung.',context:m.meaning,input:true,answer:x.de,explain:x.de,postExample:x.example})});
+    LEARN.zuInf.forEach(x=>{const ctx=(typeof ZU_CONTEXTS!=='undefined'&&ZU_CONTEXTS[x.id])||maskWord13(x.example,x.word);a.push({id:`prod13-${x.id}-p0`,concept:x.id,module:'zu',cat:'Grammatik',kind:'zu-Infinitiv aktiv',prompt:'Welches Wort ergänzt den Satz?',context:ctx,input:true,answer:x.word,explain:`${x.word} + zu-Infinitiv.`,postExample:x.example})});
+    LEARN.grammar.forEach(x=>a.push({id:`prod13-${x.id}-p0`,concept:x.id,module:'grammar',cat:'Grammatik',kind:'Grammatik aktiv',prompt:x.prompt,input:true,answer:x.answer,explain:x.explain}));
+    LEARN.modals.forEach(x=>a.push({id:`prod13-${x.id}-p0`,concept:x.id,module:'modal',cat:'Grammatik',kind:'Modalverb aktiv',prompt:'Schreiben Sie das Modalverb im Infinitiv.',context:modalMasked13(x),input:true,answer:x.word,explain:x.rule,postExample:x.examples[0]}));
+    return a;
+  }
+
+  window.allGeneratedTasks=function(){return allRec13()};
+  window.productionTasks=function(){return allProd13()};
+  window.weightedTasks=function(pool,n){return pick13(pool,n,'w13-'+Date.now())};
+  window.startProduction=function(n=14,ret='today'){startSession(pick13(allProd13(),n,'prod13-'+Date.now()),'production',ret)};
+  window.startAdaptive=function(n=20,ret='today'){
+    const pn=Math.max(3,Math.round(n*.32));
+    const tasks=sh13([...pick13(allRec13(),n-pn,'a13r-'+Date.now()),...pick13(allProd13(),pn,'a13p-'+Date.now())],'a13-'+Date.now());
+    startSession(tasks,'daily',ret);
+  };
+  window.startModule=function(id,n=18){
+    const r=allRec13().filter(t=>t.module===id),p=allProd13().filter(t=>t.module===id),pn=Math.max(3,Math.round(n*.28));
+    startSession(sh13([...pick13(r,n-pn,'m13r-'+id+Date.now()),...pick13(p,pn,'m13p-'+id+Date.now())],'m13-'+id+Date.now()),'module','learn');
+  };
+  window.startWrongSession=function(){
+    const ids=new Set(Object.keys(state.wrong||{}));const concepts=new Set([...ids].map(id=>String(id).match(/(vp\d+|nv\d+|zv\d+|za\d+|zn\d+|v\d+|g\d+|m\d+)/)?.[1]).filter(Boolean));
+    let pool=[...allRec13(),...allProd13()].filter(t=>ids.has(t.id)||concepts.has(concept13(t)));
+    if(!pool.length)pool=allRec13();
+    startSession(pick13(pool,20,'wrong13-'+Date.now()),'wrong',currentView==='home'?'home':'today');
+  };
+  window.startDiagnostic=function(){
+    const p=allRec13(),by=(m,n)=>pick13(p.filter(t=>t.module===m),n,'diag13-'+m+Date.now());
+    startSession(sh13([...by('vp',5),...by('vocab',5),...by('coll',4),...by('grammar',4),...by('zu',3),...by('modal',3)],'diag13f-'+Date.now()),'diagnostic','today');
+  };
+  window.startSprachIntensiv=function(n=20){
+    const p=allRec13().filter(t=>['vp','coll','grammar','zu','modal'].includes(t.module));
+    startSession(pick13(p,n,'sprach13-'+Date.now()),'daily','learn');
+  };
+  window.startSprachPattern=function(n=16){
+    const p=allRec13().filter(t=>['vp','coll','grammar','zu','modal'].includes(t.module)&&Array.isArray(t.options));
+    startSession(pick13(p,n,'pattern13-'+Date.now()),'daily','learn');
+  };
+
+  // ---------- Wortschatz Power: four spaced phases ----------
+  window.startWordPower=function(n=8){
+    const words=[...LEARN.vocab].sort((a,b)=>((isDue('mem-'+a.id)?-20:0)+(state.mastery['mem-'+a.id]||0))-((isDue('mem-'+b.id)?-20:0)+(state.mastery['mem-'+b.id]||0))||r13(Date.now()+a.id)()-.5).slice(0,n);
+    const meaning=[],reverse=[],context=[],active=[];
+    const allTerms=LEARN.vocab.map(x=>x.de),allDefs=LEARN.vocab.map(x=>x.definition);
+    words.forEach(x=>{
+      const cl=maskWord13(x.example,x.de),ctx=cl===x.example?`___ · ${x.definition}`:cl;
+      meaning.push({id:`wp13-${x.id}-m`,concept:x.id,cat:'Wortschatz',kind:'1 · Bedeutung → Wort',prompt:x.definition,options:choice13(x.de,allTerms,x.id+'wm'),answer:x.de,explain:`${x.de}: ${x.definition}`,postExample:x.example});
+      reverse.push({id:`wp13-${x.id}-r`,concept:x.id,cat:'Wortschatz',kind:'2 · Wort → Bedeutung',prompt:`Was bedeutet „${x.de}“?`,options:choice13(x.definition,allDefs,x.id+'wr'),answer:x.definition,explain:x.definition,postExample:x.example});
+      context.push({id:`wp13-${x.id}-c`,concept:x.id,cat:'Wortschatz',kind:'3 · Gebrauch im Kontext',prompt:'Welcher Begriff ergänzt den beruflichen Satz?',context:ctx,options:choice13(x.de,allTerms,x.id+'wc'),answer:x.de,explain:`Im Kontext: ${x.de}.`,postExample:x.example});
+      active.push({id:`wp13-${x.id}-a`,concept:x.id,cat:'Wortschatz',kind:'4 · Aktiv schreiben',prompt:x.definition,input:true,answer:x.de,explain:`Aktiver Abruf: ${x.de}.`,postExample:x.example});
+    });
+    // Same word is separated by a complete phase instead of appearing three times in a row.
+    const tasks=[...sh13(meaning,'wpm'+Date.now()),...sh13(reverse,'wpr'+Date.now()),...sh13(context,'wpc'+Date.now()),...sh13(active,'wpa'+Date.now())];
+    session={tasks,index:0,correct:0,answered:false,mode:'production',returnView:'learn'};show('session');renderSession();
+  };
+
+  // ---------- Daily B2 check: concept-diverse and context visible ----------
+  function originalSb13(){
+    const sb=[];[...(DATA.sprach1||[]),...(DATA.sprach2||[])].forEach(ex=>(ex.questions||[]).forEach(q=>{const c=(q.options||[]).find(o=>o.key===q.answer);if(c)sb.push({cat:'Sprachbausteine',kind:'Originalmaterial',prompt:`Welche Ergänzung ist korrekt? · Aufgabe ${q.n}`,body:ex.body,options:q.options.map(o=>o.text),answer:c.text,explain:`Lösung aus Originalaufgabe, Seite ${ex.page}.`,id:`v13-sb-${ex.page}-${q.n}`})}));return sb;
+  }
+  function originalRead13(){
+    const rd=[];(DATA.lesen2||[]).forEach(ex=>(ex.questions||[]).forEach(q=>{let opts=(q.options||[]).map(o=>o.text),ans=(q.options||[]).find(o=>o.key===q.answer)?.text;if(q.type==='tf'){opts=['Richtig','Falsch'];ans=q.answer==='r'?'Richtig':'Falsch'}if(ans)rd.push({cat:'Lesen',kind:'Originalmaterial',prompt:q.text||`Aufgabe ${q.n}`,body:ex.body,options:opts,answer:ans,explain:`Originaltext, Seite ${ex.page}.`,id:`v13-l-${ex.page}-${q.n}`})}));return rd;
+  }
+  function fresh13(pool,n,seed,recent){
+    let p=pool.filter(t=>!recent.has(t.id));if(p.length<n)p=pool;return pick13(p,n,seed);
+  }
+  window.makeDailyCheck=function(date=todayISO()){
+    const rec=allRec13(),recent=new Set();
+    Object.entries(state.v13.dailySets||{}).filter(([d])=>d!==date).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7).forEach(([,ids])=>(ids||[]).forEach(id=>recent.add(id)));
+    let tasks=[
+      ...fresh13(rec.filter(t=>t.module==='grammar'),4,'d13g'+date,recent),
+      ...fresh13(rec.filter(t=>t.module==='modal'),2,'d13m'+date,recent),
+      ...fresh13(rec.filter(t=>t.module==='vp'),4,'d13p'+date,recent),
+      ...fresh13(rec.filter(t=>t.module==='vocab'),4,'d13v'+date,recent),
+      ...fresh13(rec.filter(t=>t.module==='coll'),3,'d13c'+date,recent),
+      ...fresh13(rec.filter(t=>t.module==='zu'),2,'d13z'+date,recent)
+    ];
+    let sb=originalSb13().filter(t=>!recent.has(t.id));if(sb.length<2)sb=originalSb13();tasks.push(...sh13(sb,'d13s'+date).slice(0,2));
+    let rd=originalRead13().filter(t=>!recent.has(t.id));if(rd.length<3)rd=originalRead13();tasks.push(...sh13(rd,'d13r'+date).slice(0,3));
+    tasks=sh13(tasks,'daily13-'+date).slice(0,24);
+    state.v13.dailySets[date]=tasks.map(t=>t.id);const ks=Object.keys(state.v13.dailySets).sort().slice(-21);state.v13.dailySets=Object.fromEntries(ks.map(k=>[k,state.v13.dailySets[k]]));save();return tasks;
+  };
+  window.startDailyCheck=function(){
+    checkState={date:todayISO(),tasks:window.makeDailyCheck(todayISO()),i:0,answers:{},submitted:false,start:Date.now()};
+    window.renderDailyCheckQuestion();
+  };
+  window.renderDailyCheckQuestion=function(){
+    show('dailyCheck');const c=checkState;if(!c)return openDailyCheck();if(c.submitted){submitDailyCheck();return}
+    const t=c.tasks[c.i];const context=t.context?`<div class="example smart-context">${esc(t.context)}</div>`:'';
+    document.getElementById('dailyCheck').innerHTML=`<div class="v10-check-shell"><div class="v10-check-top"><button class="back" onclick="openDailyCheck()">←</button><div class="bar"><span style="width:${Math.round(c.i/c.tasks.length*100)}%"></span></div><span class="tag">${c.i+1}/${c.tasks.length}</span></div><div class="qcard"><div class="qmeta"><span class="qkind">${esc(t.kind||'B2 Tages-Check')}</span><span class="qcount">${esc(t.cat)}</span></div>${t.body?`<div class="source compact">${esc(t.body)}</div>`:''}<div class="question">${esc(t.prompt)}</div>${context}<div>${t.options.map((o,i)=>`<button class="examopt ${c.answers[c.i]===i?'selected':''}" onclick="checkState.answers[checkState.i]=${i};renderDailyCheckQuestion()"><b>${String.fromCharCode(65+i)}.</b> ${esc(o)}</button>`).join('')}</div><div class="toolbar"><button class="btn ghost sm" onclick="checkState.i=Math.max(0,checkState.i-1);renderDailyCheckQuestion()">← Zurück</button><button class="btn primary sm" onclick="checkState.i=Math.min(checkState.tasks.length-1,checkState.i+1);renderDailyCheckQuestion()">Weiter →</button></div><div class="exam-nav" style="margin-top:12px">${c.tasks.map((_,i)=>`<button class="exam-dot ${c.answers[i]!=null?'answered':''} ${i===c.i?'current':''}" onclick="checkState.i=${i};renderDailyCheckQuestion()">${i+1}</button>`).join('')}</div><button class="btn dark" style="margin-top:12px" onclick="submitDailyCheck()">Tages-Check abgeben</button></div></div>`;
+  };
+
+  // ---------- Online/offline duels: deterministic but no repeated concept ----------
+  window.challengePool=function(theme){
+    let p=allRec13().filter(t=>Array.isArray(t.options)&&t.options.length>=2);
+    if(theme==='vp')p=p.filter(t=>t.module==='vp');
+    if(theme==='vocab')p=p.filter(t=>t.module==='vocab');
+    if(theme==='grammar')p=p.filter(t=>['grammar','modal','coll'].includes(t.module));
+    if(theme==='sprach')p=p.filter(t=>['grammar','modal','coll','zu','vp'].includes(t.module));
+    return p;
+  };
+  window.cloudTasks=function(c){
+    const p=window.challengePool(c.theme||'mix');
+    const chosen=pick13(p,c.question_count,c.question_seed);
+    return chosen.map((t,i)=>({...t,options:sh13(t.options,c.question_seed+'-'+i)}));
+  };
+
+  // ---------- Schreiben: larger micro-drill bank ----------
+  window.startWriteMini=function(type){
+    const bank=V13_WRITE_MINI[type]||[];const chosen=sh13(bank,'write13-'+type+Date.now()).slice(0,Math.min(10,bank.length));
+    const tasks=chosen.map((x,i)=>({id:`w13-${type}-${h13(x.p)}-${i}`,cat:'Schreiben',kind:type==='beschwerde'?'Beschwerde':'Forumsbeitrag',prompt:x.p,options:sh13(x.o,'wo13'+i+Date.now()),answer:x.a,explain:x.e}));
+    session={tasks,index:0,correct:0,answered:false,mode:'daily',returnView:'learn'};show('session');renderSession();
+  };
+
+  // ---------- UI markers / quality notice ----------
+  const oldLearn13=window.openLearn;
+  window.openLearn=function(){
+    oldLearn13();const root=document.getElementById('learn');if(!root)return;
+    root.querySelectorAll('.v12-bank').forEach(x=>x.remove());
+    const back=root.querySelector('.backrow');
+    if(back&&!root.querySelector('.v13-quality'))back.insertAdjacentHTML('afterend',`<div class="v10-focus-card v13-quality" style="margin-bottom:14px"><div class="section-head"><div><span class="v8-badge good">V13 · Qualitätsmodus</span><h2 style="margin:8px 0 4px">${allRec13().length+allProd13().length} geprüfte Übungsvarianten</h2><p>Feste Verbindungen wurden neu aufgebaut: Bei Auswahlfragen gibt es genau eine vorgesehene Standardverbindung. Mehrdeutige Verben erhalten Satzkontext, und aktive Aufgaben sind über die Sitzung verteilt.</p></div><span class="tag">1 eindeutige Lösung</span></div></div>`);
+  };
+  const oldTrain13=window.openTrainingHub;
+  window.openTrainingHub=function(){
+    oldTrain13();const root=document.getElementById('trainingHub');if(!root)return;
+    root.querySelectorAll('.v12-bank').forEach(x=>x.remove());
+    const back=root.querySelector('.backrow');
+    if(back&&!root.querySelector('.v13-quality'))back.insertAdjacentHTML('afterend',`<div class="v10-focus-card v13-quality" style="margin-bottom:14px"><span class="v8-badge purple">V13 · ANTI-WIEDERHOLUNG</span><h2>${allRec13().length} Auswahlaufgaben + ${allProd13().length} aktive Aufgaben</h2><p>Eine Sitzung bevorzugt unterschiedliche Lernbegriffe. Fehler kommen bewusst wieder; bloße Duplikate nicht.</p></div>`);
+  };
+  const oldDaily13=window.openDailyCheck;
+  window.openDailyCheck=function(){
+    oldDaily13();const hero=document.querySelector('#dailyCheck .v10-hero p');if(hero)hero.textContent='24 B2-orientierte Aufgaben mit sichtbarem Kontext, eindeutigen festen Verbindungen und möglichst anderen Lernbegriffen als in den letzten sieben Tages-Checks.';
+  };
+  const oldHome13=window.renderHome;
+  window.renderHome=function(){
+    oldHome13();try{const kicker=document.querySelector('#home .v10-hero .v8-kicker,#home .hero .eyebrow');if(kicker)kicker.textContent=kicker.textContent.replace(/V\d+(?:\.\d+)?/,'V13');const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13'}catch(_){
+    }
+  };
+
+  // Visible version, then re-render.
+  try{const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13'}catch(_){}
+  try{renderHome();refreshTop()}catch(_){}
 })();
 </script>
 

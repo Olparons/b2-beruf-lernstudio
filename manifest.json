@@ -1,5 +1,5 @@
 {
-  "name": "B2 Beruf Lernstudio Pro · Cloud V11.1",
+  "name": "B2 Beruf Lernstudio Pro · Cloud V13",
   "short_name": "B2 Lernstudio",
   "start_url": "./index.html",
   "display": "standalone",
@@ -7,15 +7,7 @@
   "theme_color": "#4f46e5",
   "lang": "de",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png"}
   ]
 }
