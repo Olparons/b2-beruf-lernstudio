@@ -1,10 +1,10 @@
 {
-  "name": "B2 Beruf Lernstudio Pro · Cloud V14.1",
+  "name": "B2 Beruf Lernstudio Pro V15",
   "short_name": "B2 Lernstudio",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f4f7fb",
+  "background_color": "#f4f6fb",
   "theme_color": "#4f46e5",
   "lang": "de",
   "icons": [
