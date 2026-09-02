@@ -142,6 +142,20 @@ body{background:
 <style id="v11-1-clarity-style">
 .smart-context{font-size:17px;font-weight:750;line-height:1.55;border-left:4px solid #6366f1;background:#f7f8ff}.smart-context::before{content:"Satz: ";font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6366f1;font-weight:900;margin-right:6px}
 </style>
+
+<style id="v14-style">
+.v14-hero{border-radius:30px;padding:28px;background:linear-gradient(135deg,#172554,#312e81 58%,#4f46e5);color:#fff;box-shadow:0 18px 45px rgba(49,46,129,.16)}
+.v14-hero h1{font-size:clamp(30px,5vw,50px);line-height:1.02;margin:10px 0 12px;max-width:900px}
+.v14-hero p{max-width:900px;color:#e8eaff;font-size:16px;line-height:1.65}
+.v14-source-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.v14-note{padding:15px 17px;border:1px solid #c7d2fe;background:#eef2ff;border-radius:18px;color:#28315f;line-height:1.55;margin:14px 0}
+.v14-arrow{font-size:30px;font-weight:900;color:#4f46e5}
+.v14-model-card{border:1px solid #c7d2fe;background:linear-gradient(135deg,#fff,#f7f8ff)}
+#modelLab .source-box{white-space:pre-wrap}
+#modelLab .write-layout{align-items:start}
+@media(max-width:760px){.v14-source-grid{grid-template-columns:1fr}.v14-hero{padding:22px;border-radius:24px}.v14-hero h1{font-size:34px}}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -172,6 +186,7 @@ body{background:
 <section id="wordPower" class="view"></section>
 <section id="liveDuel" class="view"></section>
 <section id="deviceSync" class="view"></section>
+<section id="modelLab" class="view"></section>
 </main>
 <nav class="bottom"><div class="bottom-in">
 <button class="nav active" data-v="home" onclick="show('home')"><span class="ni">⌂</span>Start</button>
@@ -486,7 +501,23 @@ init();
 })();
 </script>
 
-<script>if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+<script>
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  let __v14Refreshing=false;
+  navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{
+    try{reg.update()}catch(_){}
+    setInterval(()=>{try{reg.update()}catch(_){}},60*60*1000);
+  }).catch(()=>{});
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(__v14Refreshing)return;__v14Refreshing=true;
+    try{
+      const busy=typeof currentView!=='undefined'&&['session','exam','writingStudio','dailyCheck','duel','liveDuel'].includes(currentView);
+      if(busy){if(typeof toast==='function')toast('Neue Version geladen. Sie wird beim nächsten Öffnen aktiv.');__v14Refreshing=false;}
+      else location.reload();
+    }catch(_){location.reload()}
+  });
+}
+</script>
 
 <script id="v8-local-social-script">
 (function(){
@@ -1061,7 +1092,7 @@ init();
   function communityChanged(){clearTimeout(communityRefreshTimer);communityRefreshTimer=setTimeout(async()=>{await loadCloudCommunity(false);if(currentView()==='community'&&!onlineGame)renderCloudCommunity()},350)}
 
   async function initCloud(){
-    document.querySelector('.brand span').textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13';
+    document.querySelector('.brand span').textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V14.1';
     refreshCloudBadge();
     if(!window.supabase?.createClient){setSyncStatus('error');console.warn('Supabase library unavailable');return}
     try{
@@ -1205,7 +1236,7 @@ init();
   // Visible build marker so users can verify they opened the corrected file.
   try{
     const sub=document.querySelector('.brand span');
-    if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13';
+    if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V14.1';
   }catch(_){}
 })();
 </script>
@@ -1439,10 +1470,10 @@ init();
   const oldDailyOpen12=openDailyCheck;
   window.openDailyCheck=openDailyCheck=function(){oldDailyOpen12();const hero=document.querySelector('#dailyCheck .v10-hero p');if(hero)hero.textContent='24 B2-orientierte Aufgaben. Der Aufgabenmix nutzt die große V12-Bibliothek und vermeidet soweit möglich Aufgaben aus den letzten Tages-Checks.'};
   const oldHome12=renderHome;
-  window.renderHome=renderHome=function(){oldHome12();try{const kicker=document.querySelector('#home .v10-hero .v8-kicker');if(kicker)kicker.textContent=kicker.textContent.replace(/V\d+(?:\.\d+)?/,'V12');const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13'}catch(_){}};
+  window.renderHome=renderHome=function(){oldHome12();try{const kicker=document.querySelector('#home .v10-hero .v8-kicker');if(kicker)kicker.textContent=kicker.textContent.replace(/V\d+(?:\.\d+)?/,'V12');const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V14.1'}catch(_){}};
 
   // Initial marker.
-  try{const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13'}catch(_){}
+  try{const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V14.1'}catch(_){}
 })();
 </script>
 
@@ -1761,14 +1792,534 @@ init();
   };
   const oldHome13=window.renderHome;
   window.renderHome=function(){
-    oldHome13();try{const kicker=document.querySelector('#home .v10-hero .v8-kicker,#home .hero .eyebrow');if(kicker)kicker.textContent=kicker.textContent.replace(/V\d+(?:\.\d+)?/,'V13');const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13'}catch(_){
+    oldHome13();try{const kicker=document.querySelector('#home .v10-hero .v8-kicker,#home .hero .eyebrow');if(kicker)kicker.textContent=kicker.textContent.replace(/V\d+(?:\.\d+)?/,'V13');const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V14.1'}catch(_){
     }
   };
 
   // Visible version, then re-render.
-  try{const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V13'}catch(_){}
+  try{const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V14.1'}catch(_){}
   try{renderHome();refreshTop()}catch(_){}
 })();
 </script>
 
+
+<script id="v14-mastery-engine">
+(function(){
+  // ============================================================
+  // V14 MASTERY ENGINE
+  // Unterrichtsmaterial + strikte Sitzungsrotation + neue B2-Praxis
+  // ============================================================
+  const V14 = window.__V14_DATA = {"sb1":[{"id":"src-sb1-46","n":46,"context":"Im Juni hatte ich mich Ihnen auf der Job-Messe in Dresden persönlich vorgestellt und Ihnen ___ auch meine Bewerbungsunterlagen gegeben.","answer":"DABEI"},{"id":"src-sb1-47","n":47,"context":"Nach einem intensiven Gespräch haben Sie mir angeboten, meine Unterlagen an Ihre Marketingleiterin weiterzuleiten, ___ ich mich sehr gefreut habe.","answer":"WORÜBER"},{"id":"src-sb1-48","n":48,"context":"Leider habe ich ___ nichts mehr von Ihrem Unternehmen gehört und bin nun unsicher, ob die Unterlagen vielleicht verlorengegangen sind.","answer":"SEITDEM"},{"id":"src-sb1-49","n":49,"context":"___ melde ich mich schriftlich bei Ihnen und hänge meine Bewerbungsunterlagen zur Sicherheit noch einmal an.","answer":"DESHALB"},{"id":"src-sb1-50","n":50,"context":"Für Ihr Unternehmen habe ich schon einige Ideen, ___ Sie Ihr Online-Kundenmagazin noch interessanter machen könnten.","answer":"WIE"},{"id":"src-sb1-51","n":51,"context":"___ ich zurzeit in keinem Beschäftigungsverhältnis stehe, bin ich zeitlich flexibel.","answer":"DA"}],"sb1bank":["DA","DABEI","DESHALB","MITTLERWEILE","OB","SEITDEM","WANN","WIE","WORAUF","WORÜBER"],"sb2":[{"id":"src-sb2-52","n":52,"context":"Auf der diesjährigen Target Computer-Messe sind wir auf ___ im Bereich Multimedia aufmerksam geworden: den PC VXL aus der Serie IIP.","options":["Ihr aktuelles Angebot","Ihr großes Interesse","Ihre neuesten Angaben"],"answer":"Ihr aktuelles Angebot"},{"id":"src-sb2-53","n":53,"context":"Bitte schicken Sie uns ___ der Kosten über eine Abnahme von 12 PCs inklusive der Lieferung an unsere Niederlassung.","options":["den offenen Betrag","die vereinbarte Summe","eine detaillierte Aufstellung"],"answer":"eine detaillierte Aufstellung"},{"id":"src-sb2-54","n":54,"context":"Da wir weitere Geräte für unseren Firmensitz benötigen, würden wir Ihnen bei guten Konditionen auch ___ erteilen.","options":["einen Dauerauftrag","einen Erstauftrag","diesen Folgeauftrag"],"answer":"einen Erstauftrag"},{"id":"src-sb2-55","n":55,"context":"Können Sie uns daher schon heute mitteilen, ___ Sie Rabatte anbieten?","options":["mit welcher Absicht","unter welchen Bedingungen","zu welchen Zwecken"],"answer":"unter welchen Bedingungen"},{"id":"src-sb2-56","n":56,"context":"Alle noch offenen Fragen ___ kann Ihnen unsere Geschäftsführerin Frau Dr. Weser gerne beantworten.","options":["bezüglich unserer Anfrage","zu dieser Bestellung","über unsere Lieferung"],"answer":"zu dieser Bestellung"},{"id":"src-sb2-57","n":57,"context":"Wir freuen uns auf ___ bis zum 02. Februar.","options":["eine gute Zusammenarbeit","eine schnelle Lösung","Ihr unverbindliches Angebot"],"answer":"Ihr unverbindliches Angebot"}],"connectors":{"DA":["___ die Besprechung früher beginnt, sollten alle Teilnehmenden pünktlich im Raum sein.","___ unser Techniker heute im Außendienst ist, kann die Wartung erst morgen stattfinden.","___ die Rechnung bereits bezahlt wurde, ist keine weitere Überweisung nötig.","___ ich am Freitag nicht im Büro bin, schicken Sie mir die Unterlagen bitte per E-Mail."],"DABEI":["Wir haben die neue Software getestet und ___ mehrere kleine Fehler entdeckt.","Die Kollegin erklärte den Ablauf und zeigte uns ___ alle wichtigen Funktionen.","Der Kunde füllte das Formular aus und stellte ___ noch zwei Rückfragen.","Wir kontrollierten die Lieferung und bemerkten ___ eine beschädigte Verpackung."],"DESHALB":["Die Lieferung verspätet sich. ___ informieren wir den Kunden noch heute.","Der Server ist ausgefallen. ___ können mehrere Mitarbeitende momentan nicht arbeiten.","Die Frist endet morgen. ___ müssen wir den Antrag heute abschicken.","Die Rechnung enthält einen Fehler. ___ bitten wir um eine korrigierte Version."],"MITTLERWEILE":["Am Anfang gab es viele technische Probleme; ___ läuft das System stabil.","Früher arbeiteten nur wenige Beschäftigte im Homeoffice; ___ nutzt es fast das ganze Team.","Die Nachfrage war zunächst gering; ___ erhalten wir täglich mehrere Anfragen.","Zu Beginn war der Prozess kompliziert; ___ ist er deutlich einfacher geworden."],"OB":["Bitte teilen Sie uns mit, ___ Sie den Termin am Donnerstag wahrnehmen können.","Wir möchten wissen, ___ die Ware bereits versendet wurde.","Könnten Sie prüfen, ___ die Rechnung vollständig bezahlt ist?","Die Personalabteilung fragt, ___ Sie weiterhin Interesse an der Stelle haben."],"SEITDEM":["Wir haben das System im Mai aktualisiert. ___ gibt es deutlich weniger Ausfälle.","Die neue Kollegin hat eine Schulung besucht. ___ arbeitet sie viel selbstständiger.","Der Lieferant wurde gewechselt. ___ kommen die Bestellungen pünktlicher an.","Wir haben feste Zuständigkeiten eingeführt. ___ werden Anfragen schneller bearbeitet."],"WANN":["Bitte sagen Sie uns, ___ die Ersatzteile geliefert werden.","Können Sie mir mitteilen, ___ die nächste Schulung stattfindet?","Der Kunde möchte wissen, ___ er mit einer Rückmeldung rechnen kann.","Wir klären noch, ___ der Techniker vor Ort sein wird."],"WIE":["Bitte erklären Sie kurz, ___ wir die Daten aus dem System exportieren können.","Können Sie uns zeigen, ___ die neue Zeiterfassung funktioniert?","Die Teamleitung möchte wissen, ___ der Ablauf verbessert werden kann.","Im Handbuch steht, ___ man ein neues Passwort einrichtet."],"WORAUF":["Die Kolleginnen freuen sich auf den Betriebsausflug, ___ sie schon lange warten.","Bitte sagen Sie mir, ___ ich bei der neuen Software besonders achten muss.","Das ist der Punkt, ___ es bei der Kontrolle besonders ankommt.","Wir besprechen morgen, ___ wir uns bei der Auswahl konzentrieren sollten."],"WORÜBER":["Der Kunde erhielt endlich eine Lösung, ___ er sich sehr freute.","Wir haben eine Änderung vorgeschlagen, ___ das Team morgen abstimmen wird.","Die Geschäftsführung veröffentlichte neue Zahlen, ___ heute viel diskutiert wird.","Es gab mehrere Beschwerden, ___ wir im nächsten Meeting sprechen müssen."]},"sb2patterns":[["Ihr aktuelles Angebot",["Auf Ihrer Website sind wir auf ___ für die neue Geräteserie aufmerksam geworden.","Auf der Messe hat uns besonders ___ für Firmenkunden interessiert.","Wir beziehen uns auf ___ vom 18. August und bitten um weitere Informationen.","Vielen Dank für ___, das Sie uns gestern zugesandt haben."],["Ihr aktuelles Angebot","Ihre interne Notiz","unsere Reklamation"]],["eine detaillierte Aufstellung",["Bitte senden Sie uns ___ aller Kosten einschließlich Lieferung und Montage.","Für die Budgetfreigabe benötigen wir ___ der einzelnen Positionen.","Könnten Sie uns ___ der Material- und Arbeitskosten zuschicken?","Vor der Bestellung wünschen wir ___ der voraussichtlichen Gesamtkosten."],["eine detaillierte Aufstellung","eine kurze Begrüßung","einen Zahlungseingang"]],["einen Erstauftrag",["Wenn Preis und Lieferzeit passen, können wir Ihnen anschließend ___ erteilen.","Bei überzeugenden Konditionen möchten wir Ihnen gerne ___ erteilen.","Nach erfolgreicher Prüfung des Angebots wäre ___ möglich.","Da wir bisher noch nicht bei Ihnen bestellt haben, handelt es sich um ___."],["einen Erstauftrag","eine Mahnung","einen Urlaubstag"]],["unter welchen Bedingungen",["Bitte teilen Sie uns mit, ___ Sie einen Mengenrabatt gewähren.","Wir möchten gern wissen, ___ eine kostenlose Lieferung möglich ist.","Könnten Sie erläutern, ___ Sie die Garantie verlängern?","Bitte informieren Sie uns, ___ eine Ratenzahlung angeboten wird."],["unter welchen Bedingungen","aus welchem Büro","mit welchem Drucker"]],["zu dieser Bestellung",["Bei Rückfragen ___ wenden Sie sich bitte an Frau Keller.","Alle weiteren Informationen ___ erhalten Sie von unserem Einkauf.","Fragen ___ beantwortet Ihnen gern Herr Özdemir.","Die Lieferadresse und weitere Hinweise ___ finden Sie im Anhang."],["zu dieser Bestellung","gegen diesen Mitarbeiter","ohne diese Rechnung"]],["Ihr unverbindliches Angebot",["Wir freuen uns auf ___ bis Freitag.","Bitte senden Sie uns ___ möglichst noch in dieser Woche.","Für unsere Entscheidung benötigen wir ___ spätestens am Montag.","Vielen Dank im Voraus. Wir erwarten ___ per E-Mail."],["Ihr unverbindliches Angebot","Ihre Kündigung","unseren Zahlungsausfall"]]],"forums":[{"id":"forum-kleiderordnung","title":"Kleiderordnung","statement":"Auch an heißen Sommertagen erwartet Ihr Arbeitgeber angemessene, formelle Kleidung im Büro. Es sind nur lange Röcke oder Hosen, geschlossene Schuhe und Jackett oder Sakko erlaubt.","source":true},{"id":"forum-stuehle","title":"Rückenfreundliche Bürostühle","statement":"Für alle Mitarbeiterinnen und Mitarbeiter sollen rückenfreundliche Bürostühle angeschafft werden. Die Hälfte der Anschaffungskosten sollen sie selbst bezahlen.","source":true},{"id":"forum-garten","title":"Mitarbeit im Firmengarten","statement":"Alle Beschäftigten sollen die Möglichkeit haben, in einem Firmengarten Pause zu machen. Die Firmenleitung schlägt vor, dass sie in ihrer Freizeit beim Anlegen und Pflegen des Gartens mithelfen.","source":true},{"id":"forum-homeoffice","title":"Zwei feste Homeoffice-Tage","statement":"Alle Beschäftigten sollen zwei feste Homeoffice-Tage pro Woche erhalten. Persönliche Teamtreffen finden weiterhin im Büro statt."},{"id":"forum-diensthandy","title":"Diensthandy nach Feierabend","statement":"Die Firma möchte, dass alle Teamleitungen auch nach Feierabend über ein Diensthandy erreichbar sind."},{"id":"forum-weiterbildung","title":"Weiterbildung am Samstag","statement":"Berufliche Weiterbildungen sollen künftig überwiegend samstags stattfinden; die Teilnahmegebühr übernimmt die Firma."},{"id":"forum-desksharing","title":"Desk-Sharing","statement":"Feste Schreibtische sollen abgeschafft werden. Beschäftigte reservieren ihren Arbeitsplatz täglich über eine App."},{"id":"forum-fahrrad","title":"Fahrrad-Leasing","statement":"Die Firma möchte ein Fahrrad-Leasing anbieten. Ein Teil der monatlichen Kosten wird vom Gehalt abgezogen."},{"id":"forum-kantine","title":"Vegetarischer Kantinentag","statement":"An zwei Tagen pro Woche soll die Kantine ausschließlich vegetarische Gerichte anbieten."},{"id":"forum-parkplatz","title":"Gebührenpflichtige Firmenparkplätze","statement":"Die bisher kostenlosen Firmenparkplätze sollen künftig monatlich bezahlt werden."},{"id":"forum-kamera","title":"Kamera in Online-Meetings","statement":"Bei internen Online-Besprechungen sollen alle Beschäftigten ihre Kamera grundsätzlich einschalten."},{"id":"forum-papierlos","title":"Papierloses Büro","statement":"Ab dem kommenden Jahr sollen interne Unterlagen nur noch digital gespeichert und verteilt werden."},{"id":"forum-fitness","title":"Firmenfitness","statement":"Die Firma möchte einen Fitnessraum einrichten. Beschäftigte sollen dafür einen kleinen Monatsbeitrag zahlen."},{"id":"forum-arbeitszeit","title":"Flexible Kernarbeitszeit","statement":"Die feste Kernarbeitszeit soll verkürzt werden, damit Beschäftigte Beginn und Ende ihres Arbeitstages flexibler wählen können."},{"id":"forum-grossraum","title":"Großraumbüro","statement":"Mehrere kleine Büros sollen zu einem großen offenen Arbeitsbereich zusammengelegt werden."},{"id":"forum-urlaub","title":"Urlaubsplanung bis Januar","statement":"Alle Beschäftigten sollen ihren gesamten Jahresurlaub bereits bis Ende Januar verbindlich planen."},{"id":"forum-sprachkurs","title":"Deutsch-/Sprachkurs in der Mittagspause","statement":"Die Firma bietet einen Sprachkurs in der Mittagspause an. Die Kurszeit gilt zur Hälfte als Arbeitszeit."},{"id":"forum-betriebsfest","title":"Betriebsfest am Wochenende","statement":"Das jährliche Betriebsfest soll künftig an einem Samstag stattfinden, damit der normale Betrieb nicht unterbrochen wird."},{"id":"forum-meetingfrei","title":"Meetingfreier Freitag","statement":"Freitagnachmittags sollen grundsätzlich keine internen Besprechungen stattfinden."},{"id":"forum-recycling","title":"Strengere Mülltrennung","statement":"In allen Büros sollen neue Regeln zur Mülltrennung gelten. Teams sind selbst für die richtige Entsorgung verantwortlich."}],"complaints":[{"id":"compl-service","title":"Beschwerde über Ihren Service","client":"Letzte Woche wurden eine neue Telefonanlage installiert und IT-Zugänge eingerichtet. Seitdem kommen in der Marketingabteilung keine Anrufe mehr an, telefonische Produktanfragen landen in der Buchhaltung, und der Zugang für einen neuen Kollegen wurde nicht zum vereinbarten Termin eingerichtet. Der Kunde hat mehrfach erfolglos versucht, die Firma telefonisch zu erreichen.","boss":["Erklären Sie, wie es zu den Problemen gekommen ist.","Schreiben Sie, welche konkrete Lösung Sie anbieten können."],"source":true},{"id":"compl-lieferung","title":"Verspätete Ersatzteillieferung","client":"Ein Geschäftskunde wartet seit fünf Tagen auf dringend benötigte Ersatzteile. Die Produktion steht teilweise still und die Sendungsverfolgung zeigt seit zwei Tagen keine Änderung.","boss":["Entschuldigen Sie sich und erklären Sie die Verzögerung.","Nennen Sie einen konkreten neuen Liefertermin und eine Kontaktmöglichkeit."]},{"id":"compl-rechnung","title":"Falsche Rechnung","client":"Auf einer Rechnung wurden zwei Positionen doppelt berechnet. Außerdem stimmt die vereinbarte Lieferpauschale nicht.","boss":["Bestätigen Sie die Prüfung der Rechnung.","Erklären Sie, wie und bis wann die korrigierte Rechnung verschickt wird."]},{"id":"compl-software","title":"Softwarezugang funktioniert nicht","client":"Mehrere Mitarbeitende können sich seit dem Update nicht mehr anmelden. Der telefonische Support war am Vormittag nicht erreichbar.","boss":["Erklären Sie den technischen Stand.","Bieten Sie einen kurzfristigen Workaround und einen Termin für die Behebung an."]},{"id":"compl-schulung","title":"Kurzfristig abgesagte Schulung","client":"Eine gebuchte Inhouse-Schulung wurde am Vorabend abgesagt. Der Kunde hatte dafür bereits Schichten umgeplant.","boss":["Zeigen Sie Verständnis für den organisatorischen Aufwand.","Bieten Sie zwei konkrete Ersatztermine an."]},{"id":"compl-moebel","title":"Beschädigte Büromöbel","client":"Vier von zwölf gelieferten Schreibtischen sind beschädigt, zwei Pakete enthalten falsche Teile.","boss":["Erklären Sie das weitere Vorgehen.","Nennen Sie einen Termin für Austausch bzw. Nachlieferung."]},{"id":"compl-internet","title":"Wiederholter Internetausfall","client":"In einem Seminarzentrum fällt die Internetverbindung seit einer Woche täglich für kurze Zeit aus.","boss":["Erklären Sie die technische Prüfung.","Bieten Sie eine Übergangslösung bis zur endgültigen Reparatur an."]},{"id":"compl-catering","title":"Catering unvollständig","client":"Bei einer Firmenveranstaltung fehlten vegetarische Menüs und ein Teil der Getränke wurde zu spät geliefert.","boss":["Gehen Sie auf beide Beschwerdepunkte ein.","Erklären Sie, wie Sie künftige Veranstaltungen besser absichern."]},{"id":"compl-reinigung","title":"Unzureichende Büroreinigung","client":"Mehrere Besprechungsräume wurden wiederholt nicht vollständig gereinigt, obwohl Zusatzleistungen vereinbart waren.","boss":["Bestätigen Sie die vereinbarten Leistungen.","Nennen Sie konkrete Kontrollmaßnahmen für die nächsten Wochen."]},{"id":"compl-drucker","title":"Druckerwartung ohne Erfolg","client":"Nach einer Wartung treten weiterhin Papierstaus auf; zusätzlich druckt das Gerät nun Streifen.","boss":["Erklären Sie den nächsten technischen Schritt.","Vereinbaren Sie einen Vor-Ort-Termin."]},{"id":"compl-hotel","title":"Fehler bei Seminarhotel-Buchung","client":"Für eine Gruppe wurden Einzelzimmer bestätigt, vor Ort standen jedoch teilweise Doppelzimmer zur Verfügung.","boss":["Erklären Sie, wie Sie den Buchungsfehler prüfen.","Nennen Sie eine konkrete Lösung für die nächste Buchung."]},{"id":"compl-kurier","title":"Vertrauliche Sendung verspätet","client":"Eine als Express gebuchte vertrauliche Sendung traf erst am Folgetag ein.","boss":["Gehen Sie auf die Expressvereinbarung ein.","Erklären Sie die interne Prüfung und das weitere Vorgehen."]},{"id":"compl-lizenz","title":"Zu wenige Softwarelizenzen","client":"Nach Vertragsbeginn stehen nur 35 statt 50 vereinbarte Nutzerlizenzen zur Verfügung.","boss":["Bestätigen Sie den vertraglichen Umfang.","Sagen Sie zu, bis wann die fehlenden Lizenzen aktiviert werden."]},{"id":"compl-telefon","title":"Telefonanlage falsch geroutet","client":"Anrufe für den Vertrieb werden seit einer Umstellung teilweise an die Personalabteilung weitergeleitet.","boss":["Erklären Sie den Konfigurationsfehler sachlich.","Nennen Sie einen konkreten Zeitpunkt für die Korrektur."]},{"id":"compl-konferenz","title":"Technik im Konferenzraum ausgefallen","client":"Bei einer wichtigen Präsentation funktionierten Beamer und Raumlautsprecher nicht zuverlässig.","boss":["Zeigen Sie Verständnis für die Situation.","Erklären Sie, welche technische Kontrolle künftig vor Veranstaltungen erfolgt."]}],"sourceInfo":{"sb1":{"title":"Sprachbausteine Teil 1 · Modelltest 1","info":"6 Lücken (46–51), 10 Wörter im Kasten, 4 Wörter bleiben übrig. Für jede richtige Lösung 0,5 Punkte; maximal 3 Punkte. Im Material werden ca. 7 Minuten empfohlen."},"sb2":{"title":"Sprachbausteine Teil 2 · Modelltest 1","info":"6 Multiple-Choice-Lücken (52–57), jeweils a/b/c. Für jede richtige Lösung 0,5 Punkte; maximal 3 Punkte. Im Material werden ca. 7 Minuten empfohlen."},"write":{"title":"Schreiben · Modelltest 1","info":"Für Schreiben sind mindestens 20 Minuten vorgesehen. Es stehen zwei Themen zur Wahl. Im gezeigten Modelltest sind maximal 14 Punkte für die Umsetzung der Schreibaufgabe genannt."}}};
+
+  state.v14 = state.v14 || {};
+  state.v14.fresh = state.v14.fresh || {};
+  state.v14.checkHistory = Array.isArray(state.v14.checkHistory) ? state.v14.checkHistory : [];
+  state.v14.checkSeq = state.v14.checkSeq || {};
+  state.v14.writeRecent = Array.isArray(state.v14.writeRecent) ? state.v14.writeRecent : [];
+  state.v14.sourceDone = state.v14.sourceDone || {};
+  try{ save(); }catch(_){}
+
+  function u14(a){return [...new Set((a||[]).filter(x=>x!==undefined&&x!==null))]}
+  function h14(s){let h=2166136261>>>0;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+  function r14(seed){let x=h14(seed)||123456789;return()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return((x>>>0)%1000000)/1000000}}
+  function sh14(a,seed){const z=[...(a||[])],r=r14(seed);for(let i=z.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[z[i],z[j]]=[z[j],z[i]]}return z}
+  function concept14(t){return String(t.concept||t.id||'').replace(/^(t13-|prod13-|v14-|src-)/,'').replace(/-(?:p|v|g|m|z|c|x)\d+$/,'')}
+  function taskId14(t){return String(t.id||('anon-'+h14(JSON.stringify(t))))}
+  function wrongConcepts14(){
+    const s=new Set();
+    Object.keys(state.wrong||{}).forEach(id=>{
+      const m=String(id).match(/(vp\d+|nv\d+|zv\d+|za\d+|zn\d+|v\d+|g\d+|m\d+|src-[\w-]+)/);
+      if(m)s.add(m[1]);
+    });
+    return s;
+  }
+  function takeUnique14(pool,n,seed,blockedConcepts=new Set()){
+    const out=[], used=new Set(), shuffled=sh14(pool,seed);
+    for(const t of shuffled){
+      const c=concept14(t);
+      if(out.length>=n)break;
+      if(blockedConcepts.has(c)||used.has(c))continue;
+      out.push(t);used.add(c);
+    }
+    if(out.length<n){
+      for(const t of shuffled){
+        if(out.length>=n)break;
+        if(out.some(x=>taskId14(x)===taskId14(t)))continue;
+        out.push(t);
+      }
+    }
+    return out;
+  }
+  function freshPick14(pool,n,key,opts={}){
+    pool=u14(pool.map(t=>t&&taskId14(t)?t:null).filter(Boolean));
+    const tr=state.v14.fresh[key] || {cycle:1,seen:[],sessions:[]};
+    let seen=new Set(tr.seen||[]);
+    const recentSessions=(tr.sessions||[]).slice(-2);
+    const recentConcepts=new Set(recentSessions.flat());
+    const unseen=pool.filter(t=>!seen.has(taskId14(t)));
+    // When almost the whole finite bank has been used, begin a new cycle instead
+    // of recycling a handful of old tasks repeatedly.
+    if(unseen.length<Math.min(n,Math.max(3,Math.floor(n*.35))) && seen.size>=Math.max(1,pool.length-n)){
+      tr.cycle=(tr.cycle||1)+1; seen=new Set(); tr.seen=[];
+    }
+    const seed=`${key}|${tr.cycle}|${Date.now()}|${Math.random()}`;
+    let candidates=pool.filter(t=>!seen.has(taskId14(t))&&!recentConcepts.has(concept14(t)));
+    let out=takeUnique14(candidates,n,seed,recentConcepts);
+
+    if(out.length<n){
+      const more=pool.filter(t=>!seen.has(taskId14(t))&&!out.some(x=>taskId14(x)===taskId14(t)));
+      out.push(...takeUnique14(more,n-out.length,seed+'u',new Set(out.map(concept14))));
+    }
+    if(out.length<n){
+      const more=pool.filter(t=>!out.some(x=>taskId14(x)===taskId14(t))&&!recentConcepts.has(concept14(t)));
+      out.push(...takeUnique14(more,n-out.length,seed+'r',new Set(out.map(concept14))));
+    }
+    if(out.length<n){
+      const more=pool.filter(t=>!out.some(x=>taskId14(x)===taskId14(t)));
+      out.push(...sh14(more,seed+'f').slice(0,n-out.length));
+    }
+
+    // Errors may return earlier, but use a different task variant when possible.
+    if(opts.repair!==false){
+      const wrong=wrongConcepts14();
+      const repair=sh14(pool.filter(t=>wrong.has(concept14(t))&&!recentSessions.slice(-1).flat().includes(concept14(t))),seed+'w').slice(0,Math.min(2,n));
+      repair.forEach(t=>{
+        if(out.some(x=>concept14(x)===concept14(t)))return;
+        const idx=out.findIndex(x=>!wrong.has(concept14(x)));
+        if(idx>=0)out[idx]=t;
+      });
+    }
+
+    out=out.slice(0,n);
+    tr.seen=u14([...(tr.seen||[]),...out.map(taskId14)]).slice(-Math.max(pool.length*2,500));
+    tr.sessions=[...(tr.sessions||[]),u14(out.map(concept14))].slice(-8);
+    state.v14.fresh[key]=tr;
+    try{save()}catch(_){}
+    return sh14(out,seed+'final');
+  }
+
+  // ---------- Source-derived Sprachbausteine ----------
+  function sourceSbTasks14(){
+    const tasks=[];
+    V14.sb1.forEach(q=>tasks.push({
+      id:q.id,concept:q.id,module:'sprach',cat:'Sprachbausteine',kind:'Modelltest 1 · Teil 1',
+      prompt:`Aufgabe ${q.n}: Welches Wort passt in die Lücke?`,context:q.context,
+      options:sh14(V14.sb1bank,q.id),answer:q.answer,
+      explain:`Lösung: ${q.answer}. Im Modelltest darf jedes Wort aus dem Kasten nur einmal verwendet werden.`
+    }));
+    V14.sb2.forEach(q=>tasks.push({
+      id:q.id,concept:q.id,module:'sprach',cat:'Sprachbausteine',kind:'Modelltest 1 · Teil 2',
+      prompt:`Aufgabe ${q.n}: Welcher Ausdruck passt am besten?`,context:q.context,
+      options:q.options,answer:q.answer,explain:`Lösung: ${q.answer}.`
+    }));
+    Object.entries(V14.connectors).forEach(([ans,rows])=>rows.forEach((context,i)=>tasks.push({
+      id:`v14-conn-${ans.toLowerCase()}-${i}`,concept:`conn-${ans}`,module:'sprach',cat:'Sprachbausteine',kind:'Konnektor im Berufskontext',
+      prompt:'Welches Wort ergänzt den Satz eindeutig?',context,
+      options:sh14(V14.sb1bank,ans+i),answer:ans,explain:`Hier passt „${ans}“ aufgrund von Satzfunktion und Bedeutung.`
+    })));
+    V14.sb2patterns.forEach((entry,ei)=>{
+      const ans=entry[0],rows=entry[1],opts=entry[2];
+      rows.forEach((context,i)=>tasks.push({
+        id:`v14-biz-${ei}-${i}`,concept:`biz-${ei}`,module:'sprach',cat:'Sprachbausteine',kind:'Geschäftliche Formulierung',
+        prompt:'Welcher Ausdruck passt am besten in den beruflichen Satz?',context,
+        options:sh14(opts,ei+'-'+i),answer:ans,explain:`Passende Standardformulierung: ${ans}.`
+      }));
+    });
+    return tasks;
+  }
+
+  // Extra safe sentence-judgement variants for verbs that occur with only one trained preposition.
+  function vpSentenceVariants14(){
+    const byVerb={};(LEARN.verbPrep||[]).forEach(x=>(byVerb[x.verb]=byVerb[x.verb]||[]).push(x));
+    const common=['an','auf','aus','bei','für','gegen','in','mit','nach','über','um','unter','von','vor','zu'];
+    const out=[];
+    (LEARN.verbPrep||[]).forEach(x=>{
+      if((byVerb[x.verb]||[]).length!==1)return;
+      const ex=String(x.example||'');
+      const rx=new RegExp(`\\b${String(x.prep).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`,'i');
+      if(!rx.test(ex))return;
+      const wrong=sh14(common.filter(p=>p!==x.prep),x.id+'v14').slice(0,3);
+      const opts=[ex,...wrong.map(p=>ex.replace(rx,p))];
+      out.push({id:`v14-${x.id}-satz`,concept:x.id,module:'vp',cat:'VerbPräp',kind:'Satz beurteilen',
+        prompt:`Welche Satzvariante verwendet die gelernte Verbindung „${x.verb} …“ korrekt?`,
+        options:sh14(opts,x.id+'opts'),answer:ex,explain:`${x.verb} ${x.prep} + ${x.case}.`,postExample:ex});
+    });
+    return out;
+  }
+
+  const getRec13=window.allGeneratedTasks;
+  const getProd13=window.productionTasks;
+  window.allGeneratedTasks=function(){
+    return [...getRec13(),...sourceSbTasks14(),...vpSentenceVariants14()];
+  };
+  window.productionTasks=function(){return getProd13()};
+
+  // ---------- Strict fresh sessions ----------
+  window.weightedTasks=function(pool,n){return freshPick14(pool,n,'generic',{repair:true})};
+  window.startProduction=function(n=14,ret='today'){
+    startSession(freshPick14(window.productionTasks(),n,'production',{repair:true}),'production',ret);
+  };
+  window.startAdaptive=function(n=20,ret='today'){
+    const rec=window.allGeneratedTasks().filter(t=>!['examformat'].includes(t.module));
+    const prod=window.productionTasks(); const pn=Math.max(4,Math.round(n*.3));
+    const a=freshPick14(rec,n-pn,'adaptive-rec',{repair:true});
+    const b=freshPick14(prod,pn,'adaptive-prod',{repair:true});
+    startSession(sh14([...a,...b],'adapt-'+Date.now()),'daily',ret);
+  };
+  window.startModule=function(id,n=18){
+    const r=window.allGeneratedTasks().filter(t=>t.module===id);
+    const p=window.productionTasks().filter(t=>t.module===id);
+    const pool=[...r,...p], pn=Math.min(p.length,Math.max(3,Math.round(n*.28)));
+    // One combined history key makes repeated openings rotate through the finite bank.
+    let chosen=freshPick14(pool,n,'module:'+id,{repair:true});
+    // Keep some active recall when enough production tasks exist.
+    if(pn&&chosen.filter(t=>t.input).length<pn){
+      const need=pn-chosen.filter(t=>t.input).length;
+      const active=freshPick14(p,need,'module:'+id+':active',{repair:true});
+      const nonActiveIdx=chosen.map((t,i)=>[t,i]).filter(([t])=>!t.input).slice(-need).map(x=>x[1]);
+      active.forEach((t,j)=>{if(nonActiveIdx[j]!=null)chosen[nonActiveIdx[j]]=t});
+    }
+    startSession(sh14(chosen,'module14'+id+Date.now()),'module','learn');
+  };
+  window.startSprachIntensiv=function(n=20){
+    const pool=window.allGeneratedTasks().filter(t=>['sprach','vp','coll','grammar','zu','modal'].includes(t.module));
+    startSession(freshPick14(pool,n,'sprach-intensiv',{repair:true}),'daily','learn');
+  };
+  window.startSprachPattern=function(n=18){
+    const pool=window.allGeneratedTasks().filter(t=>['sprach','vp','coll','grammar','zu','modal'].includes(t.module)&&Array.isArray(t.options));
+    startSession(freshPick14(pool,n,'sprach-pattern',{repair:true}),'daily','learn');
+  };
+  window.startWrongSession=function(){
+    const wrong=wrongConcepts14();
+    let pool=[...window.allGeneratedTasks(),...window.productionTasks()].filter(t=>wrong.has(concept14(t))||Object.keys(state.wrong||{}).includes(t.id));
+    if(!pool.length)pool=window.allGeneratedTasks();
+    startSession(freshPick14(pool,20,'wrong-training',{repair:false}),'wrong',currentView==='home'?'home':'today');
+  };
+  window.startDiagnostic=function(){
+    const pool=window.allGeneratedTasks().filter(t=>['vp','vocab','coll','grammar','zu','modal','sprach'].includes(t.module));
+    startSession(freshPick14(pool,24,'diagnostic',{repair:false}),'diagnostic','today');
+  };
+  window.startModelSprach=function(part){
+    const pool=part===1?sourceSbTasks14().filter(t=>t.id.startsWith('src-sb1')):sourceSbTasks14().filter(t=>t.id.startsWith('src-sb2'));
+    startSession(sh14(pool,'model-'+part+Date.now()),'daily','modelLab');
+  };
+  window.startSprachFresh14=function(n=24){
+    const pool=sourceSbTasks14();
+    startSession(freshPick14(pool,n,'source-sprach',{repair:true}),'daily','modelLab');
+  };
+
+  // ---------- Wortschatz Power: new words per opening, while preserving spaced error repair ----------
+  const oldWordPower14=window.startWordPower;
+  window.startWordPower=function(n=8){
+    const recent=(state.v14.fresh['wordpower-words']?.sessions||[]).slice(-2).flat();
+    const recentSet=new Set(recent);
+    let ranked=[...LEARN.vocab].sort((a,b)=>{
+      const aw=(isDue('mem-'+a.id)?-8:0)+(state.mastery['mem-'+a.id]||0)+(recentSet.has(a.id)?30:0);
+      const bw=(isDue('mem-'+b.id)?-8:0)+(state.mastery['mem-'+b.id]||0)+(recentSet.has(b.id)?30:0);
+      return aw-bw || r14(Date.now()+a.id)()-.5;
+    });
+    let words=ranked.filter(x=>!recentSet.has(x.id)).slice(0,n);
+    if(words.length<n)words=[...words,...ranked.filter(x=>!words.includes(x)).slice(0,n-words.length)];
+    const tr=state.v14.fresh['wordpower-words']||{sessions:[]};
+    tr.sessions=[...(tr.sessions||[]),words.map(x=>x.id)].slice(-8);
+    state.v14.fresh['wordpower-words']=tr;save();
+
+    const meaning=[],reverse=[],context=[],active=[];
+    const allTerms=LEARN.vocab.map(x=>x.de),allDefs=LEARN.vocab.map(x=>x.definition);
+    words.forEach(x=>{
+      const mask=(String(x.example||'').replace(new RegExp(String(x.de).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i'),'___'));
+      const ctx=mask===x.example?`___ · ${x.definition}`:mask;
+      const choice=(correct,arr,seed)=>sh14([correct,...sh14(arr.filter(y=>norm(String(y))!==norm(String(correct))),seed).slice(0,3)],seed+'o');
+      meaning.push({id:`wp14-${x.id}-m-${Date.now()}`,concept:x.id,cat:'Wortschatz',kind:'1 · Bedeutung → Wort',prompt:x.definition,options:choice(x.de,allTerms,x.id+'m'),answer:x.de,explain:`${x.de}: ${x.definition}`,postExample:x.example});
+      reverse.push({id:`wp14-${x.id}-r-${Date.now()}`,concept:x.id,cat:'Wortschatz',kind:'2 · Wort → Bedeutung',prompt:`Was bedeutet „${x.de}“?`,options:choice(x.definition,allDefs,x.id+'r'),answer:x.definition,explain:x.definition,postExample:x.example});
+      context.push({id:`wp14-${x.id}-c-${Date.now()}`,concept:x.id,cat:'Wortschatz',kind:'3 · Kontext',prompt:'Welcher Begriff ergänzt den beruflichen Satz?',context:ctx,options:choice(x.de,allTerms,x.id+'c'),answer:x.de,explain:`Im Kontext: ${x.de}.`,postExample:x.example});
+      active.push({id:`wp14-${x.id}-a-${Date.now()}`,concept:x.id,cat:'Wortschatz',kind:'4 · Aktiv',prompt:x.definition,input:true,answer:x.de,explain:`Aktiver Abruf: ${x.de}.`,postExample:x.example});
+    });
+    session={tasks:[...sh14(meaning,'m'+Date.now()),...sh14(reverse,'r'+Date.now()),...sh14(context,'c'+Date.now()),...sh14(active,'a'+Date.now())],index:0,correct:0,answered:false,mode:'production',returnView:'learn'};
+    show('session');renderSession();
+  };
+
+  // ---------- Multiple B2 checks per day ----------
+  function placement14(pct){
+    if(pct>=85)return['B2+','Sehr stabil auf B2-Niveau'];
+    if(pct>=72)return['B2','B2-Niveau gut getroffen'];
+    if(pct>=60)return['B2−','B2 im Aufbau'];
+    return['B1+/B2','Noch gezielt festigen'];
+  }
+  function makeCheck14(){
+    const date=todayISO(); state.v14.checkSeq[date]=(state.v14.checkSeq[date]||0)+1;
+    const seq=state.v14.checkSeq[date];
+    const rec=window.allGeneratedTasks().filter(t=>Array.isArray(t.options)&&!['examformat'].includes(t.module));
+    const groups=[
+      ['grammar',4],['modal',2],['vp',4],['vocab',4],['coll',3],['zu',2],['sprach',4]
+    ];
+    let tasks=[];
+    groups.forEach(([m,n])=>tasks.push(...freshPick14(rec.filter(t=>t.module===m),n,'check:'+m,{repair:true})));
+    // ensure 24 with Lesen/original material when available
+    try{
+      const read=[];
+      (DATA.lesen2||[]).forEach(ex=>(ex.questions||[]).forEach(q=>{
+        let opts=(q.options||[]).map(o=>o.text),ans=(q.options||[]).find(o=>o.key===q.answer)?.text;
+        if(q.type==='tf'){opts=['Richtig','Falsch'];ans=q.answer==='r'?'Richtig':'Falsch'}
+        if(ans)read.push({id:`v14-read-${ex.page}-${q.n}`,concept:`read-${ex.page}-${q.n}`,module:'read',cat:'Lesen',kind:'Originalmaterial',prompt:q.text||`Aufgabe ${q.n}`,body:ex.body,options:opts,answer:ans,explain:`Originalmaterial · Seite ${ex.page}.`});
+      }));
+      tasks.push(...freshPick14(read,Math.max(0,24-tasks.length),'check:read',{repair:false}));
+    }catch(_){}
+    tasks=sh14(tasks,'check14-'+date+'-'+seq).slice(0,24);
+    return {date,seq,id:`${date}#${seq}`,tasks};
+  }
+  window.startDailyCheck=function(){
+    const m=makeCheck14();
+    checkState={date:m.date,seq:m.seq,id:m.id,tasks:m.tasks,i:0,answers:{},submitted:false,start:Date.now()};
+    renderDailyCheckQuestion();
+  };
+  window.openDailyCheck=function(){
+    show('dailyCheck');
+    const today=todayISO(),todayRuns=state.v14.checkHistory.filter(x=>x.date===today).length;
+    const hist=state.v14.checkHistory.slice(-8).reverse();
+    const resume=checkState&&!checkState.submitted;
+    document.getElementById('dailyCheck').innerHTML=`
+      <div class="backrow"><button class="back" onclick="openExam()">←</button><div><h1>B2 Check</h1><div class="sub">Nicht nur einmal pro Tag: jeder neue Start bekommt einen anderen Aufgabenmix.</div></div></div>
+      <div class="v10-hero"><span class="v8-kicker">V14.1 · Frische-Sitzungen</span><h1>Heute schon ${todayRuns} Check${todayRuns===1?'':'s'} abgeschlossen.</h1><p>Neue Checks vermeiden bereits verwendete Aufgaben, bis der jeweilige Aufgabenpool weitgehend ausgeschöpft ist. Fehler dürfen gezielt mit einer anderen Variante zurückkommen.</p>
+      <div class="v8-hero-actions">${resume?'<button class="btn primary" onclick="renderDailyCheckQuestion()">Aktuellen Check fortsetzen</button>':''}<button class="btn ${resume?'ghost':'primary'}" onclick="startDailyCheck()">Neuen B2-Check starten</button></div></div>
+      <div class="v8-section-title"><div><h2>Letzte Ergebnisse</h2><p>Mehrere Checks am selben Tag werden getrennt gespeichert.</p></div></div>
+      <div class="v8-card">${hist.length?hist.map(x=>`<div class="history-row"><div><b>${esc(x.date)} · Check ${x.seq} · ${esc(x.level)}</b><div class="sub">${x.correct}/${x.total} · ${esc(x.label)}</div></div><span class="v8-badge ${x.pct>=72?'good':x.pct>=60?'purple':'warn'}">${x.pct}%</span></div>`).join(''):'<p class="subtle">Noch kein V14.1-Check abgeschlossen.</p>'}</div>`;
+  };
+  window.renderDailyCheckQuestion=function(){
+    show('dailyCheck');const c=checkState;if(!c)return openDailyCheck();
+    const t=c.tasks[c.i];const context=t.context?`<div class="example smart-context">${esc(t.context)}</div>`:'';
+    document.getElementById('dailyCheck').innerHTML=`<div class="v10-check-shell"><div class="v10-check-top"><button class="back" onclick="openDailyCheck()">←</button><div class="bar"><span style="width:${Math.round(c.i/c.tasks.length*100)}%"></span></div><span class="tag">Check ${c.seq} · ${c.i+1}/${c.tasks.length}</span></div><div class="qcard"><div class="qmeta"><span class="qkind">${esc(t.kind||'B2 Check')}</span><span class="qcount">${esc(t.cat)}</span></div>${t.body?`<div class="source compact">${esc(t.body)}</div>`:''}<div class="question">${esc(t.prompt)}</div>${context}<div>${(t.options||[]).map((o,i)=>`<button class="examopt ${c.answers[c.i]===i?'selected':''}" onclick="checkState.answers[checkState.i]=${i};renderDailyCheckQuestion()"><b>${String.fromCharCode(65+i)}.</b> ${esc(o)}</button>`).join('')}</div><div class="toolbar"><button class="btn ghost sm" onclick="checkState.i=Math.max(0,checkState.i-1);renderDailyCheckQuestion()">← Zurück</button><button class="btn primary sm" onclick="checkState.i=Math.min(checkState.tasks.length-1,checkState.i+1);renderDailyCheckQuestion()">Weiter →</button></div><div class="exam-nav" style="margin-top:12px">${c.tasks.map((_,i)=>`<button class="exam-dot ${c.answers[i]!=null?'answered':''} ${i===c.i?'current':''}" onclick="checkState.i=${i};renderDailyCheckQuestion()">${i+1}</button>`).join('')}</div><button class="btn dark" style="margin-top:12px" onclick="submitDailyCheck()">Check abgeben</button></div></div>`;
+  };
+  window.submitDailyCheck=function(){
+    const c=checkState;if(!c)return;
+    const missing=c.tasks.filter((_,i)=>c.answers[i]==null).length;
+    if(missing&&!confirm(`${missing} Aufgaben sind unbeantwortet. Trotzdem abgeben?`))return;
+    let correct=0;const by={},rows=[];
+    c.tasks.forEach((t,i)=>{
+      const chosen=t.options[c.answers[i]],ok=norm(String(chosen||''))===norm(String(t.answer));
+      if(ok)correct++;by[t.cat]=by[t.cat]||{c:0,n:0};by[t.cat].n++;if(ok)by[t.cat].c++;
+      rows.push({t,chosen:chosen||'–',ok});record(t.cat==='Sprachbausteine'?'Grammatik':t.cat,t.id,ok);
+    });
+    const pct=Math.round(correct/c.tasks.length*100),pl=placement14(pct);
+    c.submitted=true;
+    state.v14.checkHistory.push({id:c.id,date:c.date,seq:c.seq,pct,correct,total:c.tasks.length,level:pl[0],label:pl[1],time:Math.round((Date.now()-c.start)/1000)});
+    state.v14.checkHistory=state.v14.checkHistory.slice(-60);save();
+    document.getElementById('dailyCheck').innerHTML=`<div class="backrow"><button class="back" onclick="openDailyCheck()">←</button><div><h1>Check ${c.seq} · Ergebnis</h1><div class="sub">${esc(c.date)} · Lern-Diagnose, keine offizielle Einstufung.</div></div></div>
+    <div class="v10-hero"><span class="v8-kicker">${esc(pl[0])}</span><h1>${correct}/${c.tasks.length} · ${pct}%</h1><p>${esc(pl[1])}. Starten Sie heute gern noch einen neuen Check – die Aufgaben werden erneut rotiert.</p><div class="v8-hero-actions"><button class="btn primary" onclick="startDailyCheck()">Neuen Check starten</button><button class="btn ghost" onclick="openTrainingHub()">Fehler trainieren</button></div></div>
+    <div class="v8-section-title"><div><h2>Bereiche</h2></div></div><div class="v8-card">${Object.entries(by).map(([k,v])=>`<div class="history-row"><b>${esc(k)}</b><span>${v.c}/${v.n}</span></div>`).join('')}</div>
+    <div class="v8-section-title"><div><h2>Antworten prüfen</h2></div></div><div class="v8-stack">${rows.map((r,i)=>`<div class="v8-card"><span class="v8-badge ${r.ok?'good':'warn'}">${i+1} · ${r.ok?'Richtig':'Fehler'}</span><h3>${esc(r.t.prompt)}</h3>${r.t.context?`<div class="example">${esc(r.t.context)}</div>`:''}<p><b>Ihre Antwort:</b> ${esc(r.chosen)}</p><p><b>Lösung:</b> ${esc(r.t.answer)}</p><p class="sub">${esc(r.t.explain||'')}</p></div>`).join('')}</div>`;
+  };
+
+  // ---------- Writing bank / source material ----------
+  function nextWriting14(type,sourceOnly=false){
+    const bank=(type==='forum'?V14.forums:V14.complaints).filter(x=>!sourceOnly||x.source);
+    const recent=new Set((state.v14.writeRecent||[]).slice(-8));
+    let candidates=bank.filter(x=>!recent.has(x.id));if(!candidates.length)candidates=bank;
+    const item=sh14(candidates,type+Date.now())[0];
+    state.v14.writeRecent=[...(state.v14.writeRecent||[]),item.id].slice(-20);save();return item;
+  }
+  window.startFreshWriting14=function(type,examMode=false,sourceOnly=false){
+    const item=nextWriting14(type,sourceOnly);
+    state.v14.currentWriting={type,examMode,item,key:`v14-${item.id}-${Date.now()}`};
+    renderWriting14();
+  };
+  function writingTask14(w){
+    if(w.type==='forum')return `In Ihrer Firma können sich alle Mitarbeiterinnen und Mitarbeiter in einem Forum austauschen. Schreiben Sie einen Forumsbeitrag zum Thema „${w.item.title}“. Begründen Sie Ihre Meinung, nennen Sie passende Beispiele und gliedern Sie Ihren Text in sinnvolle Abschnitte.\n\nThema: ${w.item.statement}`;
+    return `Ihre Teamleitung leitet Ihnen die Beschwerde eines Kunden weiter und bittet Sie zu antworten. Verwenden Sie eine angemessene, formelle Sprache.\n\nKundenproblem: ${w.item.client}\n\nInterne Anweisung:\n• ${w.item.boss.join('\n• ')}`;
+  }
+  function checklist14(type){
+    return type==='forum'
+      ?['Thema klar aufgegriffen','Mindestens ein nachvollziehbares Argument','Gegenposition oder Nachteil berücksichtigt','Eigene Meinung begründet','Passendes Beispiel genannt','Sinnvolle Absätze','Konnektoren verwendet','Passender Abschluss']
+      :['Formelle Anrede/Bezug','Kundenproblem konkret aufgegriffen','Alle internen Anweisungen erfüllt','Verständnis/Entschuldigung professionell','Ursache sachlich erklärt','Konkrete Lösung/Zusage','Keine erfundene Zusatzleistung nötig','Professioneller Schluss'];
+  }
+  window.__renderWriting14Bridge=function(){return renderWriting14()};
+  function renderWriting14(){
+    show('modelLab');const w=state.v14.currentWriting;if(!w)return openModelLab();
+    const saved=state.writing?.drafts?.[w.key]?.text||'';
+    document.getElementById('modelLab').innerHTML=`<div class="backrow"><button class="back" onclick="openModelLab()">←</button><div style="flex:1"><h1>${w.examMode?'Prüfungsmodus':'Schreibtraining'} · ${w.type==='forum'?'Forumsbeitrag':'Beschwerdeantwort'}</h1><div class="sub">${w.item.source?'Aus Ihren hochgeladenen Unterrichtsunterlagen':'Neue B2-Beruf-Übungsaufgabe'} · beim nächsten Neustart wird ein anderes Thema bevorzugt.</div></div>${w.examMode?'<span class="tag" id="v14Timer">20:00</span>':''}</div>
+      <div class="write-layout"><div class="v8-stack"><div class="v8-card"><span class="v8-badge ${w.item.source?'good':'purple'}">${w.item.source?'Unterrichtsmaterial':'Neue Variante'}</span><h2>${esc(w.item.title)}</h2><div class="source-box">${esc(writingTask14(w))}</div></div>
+      <div class="v8-card"><div class="section-head"><div><h2>Ihr Text</h2><p id="v14WordInfo">0 Wörter</p></div><button class="btn ghost sm" onclick="saveWriting14()">Speichern</button></div><textarea id="v14WriteText" class="writing-area" placeholder="Schreiben Sie hier …" oninput="wordCount14()">${esc(saved)}</textarea><div class="toolbar"><button class="btn primary" onclick="checkWriting14()">Lerncheck</button><button class="btn ghost" onclick="startFreshWriting14('${w.type}',${w.examMode?'true':'false'},false)">Andere Aufgabe</button></div><div id="v14WriteCheck"></div></div></div>
+      <aside class="v8-card"><h3>Checkliste</h3>${checklist14(w.type).map(x=>`<label class="checkline"><input type="checkbox"> <span>${esc(x)}</span></label>`).join('')}<hr><p class="sub">Der Lerncheck ist bewusst kein offizielles TELC-Rating. Er prüft Strukturmerkmale und hilft beim Überarbeiten.</p></aside></div>`;
+    wordCount14(); if(w.examMode)startTimer(20*60,'v14Timer');
+  }
+  window.wordCount14=function(){const ta=document.getElementById('v14WriteText'),el=document.getElementById('v14WordInfo');if(!ta||!el)return;const n=(ta.value.trim().match(/\S+/g)||[]).length;el.textContent=`${n} Wörter`};
+  window.saveWriting14=function(){const w=state.v14.currentWriting,ta=document.getElementById('v14WriteText');if(!w||!ta)return;state.writing=state.writing||{};state.writing.drafts=state.writing.drafts||{};state.writing.drafts[w.key]={type:w.type,title:w.item.title,text:ta.value,date:todayISO(),source:w.item.source?'Unterrichtsmaterial':'V14'};save();toast('Entwurf gespeichert.')};
+  window.checkWriting14=function(){
+    const w=state.v14.currentWriting,ta=document.getElementById('v14WriteText'),out=document.getElementById('v14WriteCheck');if(!w||!ta||!out)return;
+    const txt=ta.value.trim(),low=txt.toLowerCase(),words=(txt.match(/\S+/g)||[]).length,paras=txt.split(/\n\s*\n/).filter(x=>x.trim()).length;
+    const conns=['weil','obwohl','deshalb','daher','allerdings','einerseits','andererseits','außerdem','dennoch','zwar','damit','während','abschließend'].filter(x=>low.includes(x));
+    const checks=[
+      [words>=110,`${words} Wörter · für dieses Lerntraining sind 110+ ein hilfreicher Übungswert (keine offizielle Mindestzahl).`],
+      [paras>=3,`${paras} erkennbare Abschnitte.`],
+      [conns.length>=3,`${conns.length} verschiedene B2-Konnektoren erkannt: ${conns.slice(0,6).join(', ')||'–'}.`]
+    ];
+    if(w.type==='forum'){
+      checks.push([/meiner meinung|ich bin der meinung|ich halte|aus meiner sicht/.test(low),'Eigene Position sprachlich markiert.']);
+      checks.push([/zum beispiel|beispielsweise|etwa /.test(low),'Beispielsignal erkannt.']);
+    }else{
+      checks.push([/bedauern|entschuldig|verständnis/.test(low),'Kundenorientierte Reaktion erkannt.']);
+      checks.push([/lösung|wir werden|wir senden|wir sorgen|termin|spätestens|bis zum|bis freitag|bis montag/.test(low),'Konkrete Handlung/Zusage erkannt.']);
+    }
+    out.innerHTML=`<div class="feedback show ${checks.filter(x=>x[0]).length>=Math.ceil(checks.length*.7)?'ok':'no'}" style="margin-top:14px"><b>Lerncheck</b>${checks.map(x=>`<div style="margin-top:7px">${x[0]?'✓':'○'} ${esc(x[1])}</div>`).join('')}<div class="memory-example" style="margin-top:10px">Überarbeiten Sie gezielt die offenen Punkte. Dieser Check ersetzt keine offizielle Prüfungsbewertung.</div></div>`;
+    saveWriting14();
+  };
+
+  // ---------- Model-test laboratory ----------
+  window.openModelLab=function(){
+    show('modelLab');
+    document.getElementById('modelLab').innerHTML=`
+      <div class="backrow"><button class="back" onclick="openLearn()">←</button><div><h1>Modelltest-Labor</h1><div class="sub">Ihre neuen Unterrichtsfotos wurden als echte Lernquelle eingebaut – plus viele neue Varianten nach derselben Logik.</div></div></div>
+      <div class="v14-hero"><span class="v8-kicker">V14.1 · Unterrichtsmaterial integriert</span><h1>Originalformat verstehen. Dann mit frischen Aufgaben automatisieren.</h1><p>Die Originalaufgaben bleiben als Referenz erkennbar. Daneben erzeugt die App neue B2-Beruf-Praxis, ohne Lösungen vor der Antwort zu zeigen.</p><div class="v8-hero-actions"><button class="btn primary" onclick="startSprachFresh14(24)">24 frische Sprachbausteine</button><button class="btn ghost" onclick="startFreshWriting14('forum',false,false)">Neue Schreibaufgabe</button></div></div>
+      <div class="v14-source-grid">
+        <div class="v8-card"><span class="v8-badge good">Quelle · Seite 44</span><h3>${esc(V14.sourceInfo.sb1.title)}</h3><p>${esc(V14.sourceInfo.sb1.info)}</p><div class="toolbar"><button class="btn primary sm" onclick="startModelSprach(1)">Original 46–51 üben</button><button class="btn ghost sm" onclick="startSprachFresh14(18)">Neue Varianten</button></div></div>
+        <div class="v8-card"><span class="v8-badge good">Quelle · Seite 47</span><h3>${esc(V14.sourceInfo.sb2.title)}</h3><p>${esc(V14.sourceInfo.sb2.info)}</p><div class="toolbar"><button class="btn primary sm" onclick="startModelSprach(2)">Original 52–57 üben</button><button class="btn ghost sm" onclick="startSprachFresh14(18)">Neue Varianten</button></div></div>
+        <div class="v8-card"><span class="v8-badge purple">Schreiben · Unterricht</span><h3>Beschwerde über Service</h3><p>Telefonanlage, falsch geroutete Anrufe und fehlender IT-Zugang. Die interne Anweisung verlangt: Ursache erklären + konkrete Lösung anbieten.</p><button class="btn primary sm" onclick="startWritingById14('compl-service',false)">Quelle trainieren</button></div>
+        <div class="v8-card"><span class="v8-badge purple">Schreiben · Beispieltexte</span><h3>Kleiderordnung</h3><p>Formelle Kleidung auch an heißen Tagen: lange Röcke/Hosen, geschlossene Schuhe und Jackett/Sakko. Nutzen Sie die Argumente aus dem Beispiel als Analyse-, nicht als Auswendiglernmaterial.</p><button class="btn primary sm" onclick="startWritingById14('forum-kleiderordnung',false)">Quellenthemen trainieren</button></div>
+        <div class="v8-card"><span class="v8-badge">Modelltest 1 · Schreiben</span><h3>Rückenfreundliche Bürostühle / Firmengarten</h3><p>${esc(V14.sourceInfo.write.info)}</p><button class="btn primary sm" onclick="openSourceForumChoice14()">20-Minuten-Modus</button></div>
+      </div>
+      <div class="v8-section-title"><div><h2>Neue Schreibaufgaben</h2><p>${V14.forums.length} Forums-Themen + ${V14.complaints.length} Beschwerdeszenarien. Zuletzt verwendete Themen werden vermieden.</p></div></div>
+      <div class="quick-actions"><button class="quick-action" onclick="startFreshWriting14('forum',false,false)"><span>Forum</span><b>Neue Aufgabe</b></button><button class="quick-action" onclick="startFreshWriting14('forum',true,false)"><span>20 Min.</span><b>Forum Prüfungsmodus</b></button><button class="quick-action" onclick="startFreshWriting14('complaint',false,false)"><span>Beschwerde</span><b>Neue Aufgabe</b></button><button class="quick-action" onclick="startFreshWriting14('complaint',true,false)"><span>20 Min.</span><b>Beschwerde Prüfungsmodus</b></button></div>
+      <div class="v14-note"><b>Frische-Regel:</b> Eine bereits verwendete konkrete Aufgabe wird innerhalb eines Lernpools nicht sofort wieder gezeigt. Erst wenn der Pool weitgehend ausgeschöpft ist, beginnt ein neuer Zyklus. Falsch beantwortete Lernbegriffe dürfen früher in einer anderen Variante zurückkehren.</div>`;
+  };
+
+  // ---------- UI integration ----------
+  const oldLearn14=window.openLearn;
+  window.openLearn=function(){
+    oldLearn14();
+    const root=document.getElementById('learn'); if(!root||root.querySelector('.v14-model-card'))return;
+    const marker=root.querySelector('.v13-quality')||root.querySelector('.v10-focus-card')||root.firstElementChild;
+    const card=`<div class="v8-card v14-model-card clickable" onclick="openModelLab()"><div class="section-head"><div><span class="v8-badge good">NEU · Unterrichtsmaterial</span><h2>Modelltest-Labor</h2><p>Sprachbausteine 46–57, Schreiben-Aufgaben aus Ihren Fotos und viele neue Varianten mit Sitzungsrotation.</p></div><span class="v14-arrow">→</span></div></div>`;
+    if(marker)marker.insertAdjacentHTML('afterend',card);else root.insertAdjacentHTML('afterbegin',card);
+  };
+  const oldTraining14=window.openTrainingHub;
+  window.openTrainingHub=function(){
+    oldTraining14();
+    const root=document.getElementById('trainingHub');if(!root||root.querySelector('.v14-fresh-banner'))return;
+    const first=root.querySelector('.backrow');
+    if(first)first.insertAdjacentHTML('afterend',`<div class="v14-note v14-fresh-banner"><b>V14.1 · Jede neue Sitzung rotiert.</b> Sie können denselben Bereich fünfmal am Tag starten: die App versucht zuerst noch nicht verwendete konkrete Aufgaben. Exakte Wiederholungen kommen erst nach Ausschöpfen des Pools; Fehler dürfen gezielt früher wiederkehren.</div>`);
+  };
+  const oldExam14=window.openExam;
+  window.openExam=function(){
+    oldExam14();
+    const root=document.getElementById('exam');if(!root||root.querySelector('.v14-model-exam'))return;
+    const first=root.querySelector('.backrow')||root.firstElementChild;
+    if(first)first.insertAdjacentHTML('afterend',`<div class="v8-card v14-model-exam clickable" onclick="openModelLab()"><span class="v8-badge good">Modelltest 1</span><h2>Unterrichtsmaterial trainieren</h2><p>Originale Sprachbausteine aus den Fotos und Schreiben mit 20-Minuten-Modus.</p></div>`);
+  };
+  const oldWritingAcademy14=window.openWritingAcademy;
+  window.openWritingAcademy=function(){
+    oldWritingAcademy14();
+    const root=document.getElementById('writingAcademy');if(!root||root.querySelector('.v14-writing-extra'))return;
+    const hero=root.querySelector('.v8-hero');
+    if(hero)hero.insertAdjacentHTML('afterend',`<div class="v8-card v14-writing-extra"><div class="section-head"><div><span class="v8-badge purple">V14.1 · Themenrotation</span><h2>${V14.forums.length+V14.complaints.length} zusätzliche Schreibszenarien</h2><p>Quellenthemen aus dem Unterricht plus neue B2-Beruf-Szenarien. Ein Thema wird nicht sofort wiederholt.</p></div></div><div class="toolbar"><button class="btn primary sm" onclick="startFreshWriting14('forum',false,false)">Neues Forum</button><button class="btn ghost sm" onclick="startFreshWriting14('complaint',false,false)">Neue Beschwerde</button><button class="btn ghost sm" onclick="openModelLab()">Unterrichtsmaterial</button></div></div>`);
+  };
+
+  function updateBrand14(){
+    try{
+      const sub=document.querySelector('.brand span');if(sub)sub.textContent='15-Tage-Intensiv · Lernen · Training · Prüfung · Cloud Sync · V14.1';
+      const b=document.querySelector('.brand b');if(b)b.textContent='B2 Beruf Lernstudio Pro';
+    }catch(_){}
+  }
+  updateBrand14();
+
+  // Count and quality marker
+  setTimeout(()=>{
+    try{
+      const total=window.allGeneratedTasks().length+window.productionTasks().length;
+      document.documentElement.dataset.v14Total=String(total);
+    }catch(_){}
+  },0);
+
+  // Expose small QA hook for automated smoke tests.
+  window.__V14_QA__={
+    version:'V14.1',
+    sourceTasks:()=>sourceSbTasks14().length,
+    totalTasks:()=>window.allGeneratedTasks().length+window.productionTasks().length,
+    writingTopics:()=>V14.forums.length+V14.complaints.length,
+    freshState:()=>state.v14.fresh
+  };
+})();
+</script>
+
+
+<script id="v14-source-analysis">
+(function(){
+  const SOURCE_ANALYSIS14=[
+    {id:'v14-src-w1',concept:'src-write-service',module:'source',cat:'Schreiben',kind:'Beschwerde · Aufgabenanalyse',prompt:'Welche zwei Punkte verlangt die interne Anweisung bei der Service-Beschwerde ausdrücklich?',options:['Ursache erklären + konkrete Lösung anbieten','Rabatt anbieten + Rechnung stornieren','Nur entschuldigen + Grußformel schreiben','Neue Produkte bewerben + Termin absagen'],answer:'Ursache erklären + konkrete Lösung anbieten',explain:'Im Unterrichtsmaterial werden genau diese beiden Punkte hervorgehoben.'},
+    {id:'v14-src-w2',concept:'src-write-service',module:'source',cat:'Schreiben',kind:'Beschwerde · Inhalt',prompt:'Welches Problem gehört zur Kundenbeschwerde?',options:['Telefonische Produktanfragen landen in der Buchhaltung.','Die Kantine bietet kein Frühstück an.','Die Rechnung wurde bereits bezahlt.','Der Firmenparkplatz ist zu klein.'],answer:'Telefonische Produktanfragen landen in der Buchhaltung.',explain:'Die neue Telefonanlage routet Anfragen in den falschen Bereich.'},
+    {id:'v14-src-w3',concept:'src-write-service',module:'source',cat:'Schreiben',kind:'Beschwerde · Inhalt',prompt:'Was ist mit dem neuen Kollegen passiert?',options:['Sein Zugang zum internen Netzwerk wurde nicht zum vereinbarten Termin eingerichtet.','Er hat seinen Urlaub zu spät beantragt.','Er erhielt zwei Diensthandys.','Sein Arbeitsplatz wurde bereits vollständig eingerichtet.'],answer:'Sein Zugang zum internen Netzwerk wurde nicht zum vereinbarten Termin eingerichtet.',explain:'Dieser Punkt muss in der Antwort berücksichtigt werden.'},
+    {id:'v14-src-w4',concept:'src-write-service',module:'source',cat:'Schreiben',kind:'Beschwerde · Register',prompt:'Welche Formulierung passt am besten zu einer professionellen Antwort?',options:['Wir bedauern sehr, dass es bei der Einrichtung zu diesen Schwierigkeiten gekommen ist.','Das war halt Pech.','Dafür können wir nichts.','Sie müssen einfach warten.'],answer:'Wir bedauern sehr, dass es bei der Einrichtung zu diesen Schwierigkeiten gekommen ist.',explain:'Die Aufgabe verlangt eine angemessene, formelle und kundenorientierte Sprache.'},
+
+    {id:'v14-src-f1',concept:'src-forum-kleider',module:'source',cat:'Schreiben',kind:'Forumsbeitrag · Thema',prompt:'Welche Regel steht beim Thema „Kleiderordnung“ im Mittelpunkt?',options:['Auch an heißen Sommertagen wird angemessene, formelle Kleidung verlangt.','Alle Mitarbeitenden müssen im Homeoffice arbeiten.','Die Kantine wird geschlossen.','Der Urlaub muss im Januar geplant werden.'],answer:'Auch an heißen Sommertagen wird angemessene, formelle Kleidung verlangt.',explain:'Genannt werden lange Röcke oder Hosen, geschlossene Schuhe und Jackett/Sakko.'},
+    {id:'v14-src-f2',concept:'src-forum-kleider',module:'source',cat:'Schreiben',kind:'Argument erkennen',prompt:'Welches Argument verwendet der Beispieltext gegen die strenge Kleiderordnung?',options:['Die Sommertage werden wärmer und im Büro gibt es keine Klimaanlage.','Die Firma bezahlt neue Anzüge.','Alle Kunden verlangen Uniformen.','Die Arbeitszeit wird verkürzt.'],answer:'Die Sommertage werden wärmer und im Büro gibt es keine Klimaanlage.',explain:'Der Beispieltext verbindet Hitze/Klimawandel mit fehlender Klimaanlage.'},
+    {id:'v14-src-f3',concept:'src-forum-kleider',module:'source',cat:'Schreiben',kind:'Vorschlag erkennen',prompt:'Welche Lösung schlägt der Beispieltext vor?',options:['Entweder keine formelle Kleidung verlangen oder Klimaanlagen installieren.','Alle sollen zu Hause bleiben.','Nur die Arbeitszeit verlängern.','Geschlossene Schuhe verbieten, sonst nichts ändern.'],answer:'Entweder keine formelle Kleidung verlangen oder Klimaanlagen installieren.',explain:'Der Text nennt zwei alternative Lösungswege.'},
+    {id:'v14-src-f4',concept:'src-forum-kleider',module:'source',cat:'Schreiben',kind:'B2-Transfer',prompt:'Was sollte man aus dem Beispieltext lernen, statt ihn auswendig zu lernen?',options:['Argument → Begründung/Beispiel → konkreter Vorschlag','Nur einzelne Sätze kopieren','Möglichst viele Ausrufezeichen verwenden','Auf eine eigene Meinung verzichten'],answer:'Argument → Begründung/Beispiel → konkreter Vorschlag',explain:'Die Struktur ist übertragbar auf neue Forumsthemen.'},
+
+    {id:'v14-src-m1',concept:'src-forum-stuehle',module:'source',cat:'Schreiben',kind:'Modelltest · Thema A',prompt:'Was ist beim Thema „Rückenfreundliche Bürostühle“ der konfliktträchtige Punkt?',options:['Die Beschäftigten sollen die Hälfte der Anschaffungskosten selbst bezahlen.','Es gibt keine neuen Stühle.','Nur die Geschäftsführung darf sitzen.','Die Stühle dürfen nicht verstellt werden.'],answer:'Die Beschäftigten sollen die Hälfte der Anschaffungskosten selbst bezahlen.',explain:'Genau dieser Kostenanteil bietet Stoff für Pro- und Contra-Argumente.'},
+    {id:'v14-src-m2',concept:'src-forum-garten',module:'source',cat:'Schreiben',kind:'Modelltest · Thema B',prompt:'Was schlägt die Firmenleitung beim Firmengarten zusätzlich vor?',options:['Die Beschäftigten sollen in ihrer Freizeit beim Anlegen und Pflegen helfen.','Der Garten wird nur für Kunden geöffnet.','Pausen im Garten werden verboten.','Die Pflege übernimmt ausschließlich eine externe Firma.'],answer:'Die Beschäftigten sollen in ihrer Freizeit beim Anlegen und Pflegen helfen.',explain:'Der Gegensatz „Pausenmöglichkeit vs. Mithilfe in der Freizeit“ eignet sich gut zum Argumentieren.'},
+    {id:'v14-src-m3',concept:'src-write-format',module:'source',cat:'Prüfungsstrategie',kind:'Schreiben · Formatwissen',prompt:'Wie viel Zeit soll man laut gezeigtem Modelltest für Schreiben mindestens einplanen?',options:['20 Minuten','7 Minuten','35 Minuten nur für Schreiben'],answer:'20 Minuten',explain:'Im Material steht: „Planen Sie für den Teil Schreiben mindestens 20 Minuten ein.“'},
+    {id:'v14-src-m4',concept:'src-write-format',module:'source',cat:'Prüfungsstrategie',kind:'Schreiben · Formatwissen',prompt:'Wie viele Themen stehen beim gezeigten Forumsbeitrag zur Auswahl?',options:['Zwei','Eins','Vier'],answer:'Zwei',explain:'Thema A oder B wird gewählt.'}
+  ];
+
+  const prevRec14=window.allGeneratedTasks;
+  window.allGeneratedTasks=function(){return [...prevRec14(),...SOURCE_ANALYSIS14]};
+
+  window.startSourceAnalysis14=function(){
+    startSession(freshPickSource14(SOURCE_ANALYSIS14,12),'daily','modelLab');
+  };
+  function freshPickSource14(pool,n){
+    const key='source-analysis';
+    state.v14.sourceSeen=state.v14.sourceSeen||{};
+    const seen=new Set(state.v14.sourceSeen[key]||[]);
+    let p=pool.filter(x=>!seen.has(x.id));
+    if(p.length<Math.min(n,pool.length)){state.v14.sourceSeen[key]=[];p=[...pool]}
+    const chosen=p.sort(()=>Math.random()-.5).slice(0,Math.min(n,p.length));
+    state.v14.sourceSeen[key]=[...(state.v14.sourceSeen[key]||[]),...chosen.map(x=>x.id)];save();
+    return chosen.sort(()=>Math.random()-.5);
+  }
+
+  window.startWritingById14=function(id,examMode=false){
+    const all=[...window.__V14_DATA.forums,...window.__V14_DATA.complaints],item=all.find(x=>x.id===id);
+    if(!item){toast('Aufgabe nicht gefunden.');return}
+    const type=id.startsWith('forum-')?'forum':'complaint';
+    state.v14.currentWriting={type,examMode,item,key:`v14-${item.id}-${Date.now()}`};
+    // renderWriting14 is local to the previous V14 script, so route through the public starter
+    // by temporarily making this item the only eligible source via recent ordering is not reliable.
+    // Instead call a public bridge installed below.
+    if(window.__renderWriting14Bridge)window.__renderWriting14Bridge();
+    else startFreshWriting14(type,examMode,true);
+  };
+
+  window.openSourceForumChoice14=function(){
+    const body=document.getElementById('modalBody');
+    body.innerHTML=`<h2>Quellenthema wählen</h2><p class="sub">Alle drei Themen stammen aus Ihren hochgeladenen Unterrichts-/Modelltestseiten.</p>
+      <div class="quick-actions">
+        <button class="quick-action" onclick="closeModal();startWritingById14('forum-kleiderordnung',true)"><span>Beispieltexte</span><b>Kleiderordnung</b></button>
+        <button class="quick-action" onclick="closeModal();startWritingById14('forum-stuehle',true)"><span>Modelltest 1 · A</span><b>Rückenfreundliche Bürostühle</b></button>
+        <button class="quick-action" onclick="closeModal();startWritingById14('forum-garten',true)"><span>Modelltest 1 · B</span><b>Mitarbeit im Firmengarten</b></button>
+      </div><button class="btn ghost" style="margin-top:14px" onclick="closeModal()">Schließen</button>`;
+    document.getElementById('modal').classList.add('open');
+  };
+
+  const oldModelLab14b=window.openModelLab;
+  window.openModelLab=function(){
+    oldModelLab14b();
+    const root=document.getElementById('modelLab');if(!root||root.querySelector('.v14-source-analysis'))return;
+    const note=root.querySelector('.v14-note');
+    const card=`<div class="v8-card v14-source-analysis"><div class="section-head"><div><span class="v8-badge good">12 neue Quellenfragen</span><h2>Unterrichtsmaterial analysieren</h2><p>Beschwerde, Kleiderordnung, Bürostühle, Firmengarten und Prüfungsformat aktiv abrufen.</p></div></div><button class="btn primary sm" onclick="startSourceAnalysis14()">Quellenfragen starten</button></div>`;
+    if(note)note.insertAdjacentHTML('beforebegin',card);else root.insertAdjacentHTML('beforeend',card);
+  };
+})();
+</script>
+
+
+<script>
+// V14.1: Hören/audio intentionally disabled. This project focuses on Lesen, Sprachbausteine, Schreiben, Sprechen and language mastery.
+window.addEventListener('load',()=>{
+  try{
+    if(typeof window.stopSpeech==='function') window.stopSpeech();
+    window.openHoeren=function(){ if(typeof toast==='function') toast('Hören ist in dieser Version bewusst nicht enthalten.'); };
+    document.querySelectorAll('[onclick*="openHoeren"],[data-view="hoeren"],#hoeren').forEach(el=>el.remove());
+  }catch(_){}
+});
+</script>
 </body></html>
