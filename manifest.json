@@ -1,10 +1,10 @@
 {
-  "name": "B2 Beruf Lernstudio Pro V15",
+  "name": "B2 Beruf Lernstudio Pro · V15.1",
   "short_name": "B2 Lernstudio",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f4f6fb",
+  "background_color": "#f4f7fb",
   "theme_color": "#4f46e5",
   "lang": "de",
   "icons": [
